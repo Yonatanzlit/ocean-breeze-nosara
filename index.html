@@ -3,166 +3,142 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 :root{
-  --shell:#F4EFE4;        /* warm paper */
-  --panel:#FBF8F1;        /* lifted card */
-  --ink:#191C17;          /* jungle near-black */
-  --stone:#6B6658;        /* muted warm grey text */
-  --line:#D8D0BE;         /* hairline */
-  --forest:#163F38;       /* deep teal-green, primary */
-  --forest-2:#22564D;
-  --brass:#A97F4B;        /* warm gold accent */
-  --brass-deep:#8A662F;
-  --ocean:#1C6E6A;        /* pool teal, for data */
+  --shell:#F4EFE4; --panel:#FBF8F1; --ink:#191C17; --stone:#6B6658; --line:#D8D0BE;
+  --forest:#163F38; --forest-2:#22564D; --brass:#A97F4B; --brass-deep:#8A662F; --ocean:#1C6E6A;
   --shadow:0 1px 0 rgba(25,28,23,.04), 0 18px 40px -28px rgba(25,28,23,.35);
   --serif:"Didot","Bodoni 72",Georgia,"Times New Roman",serif;
+  --serif-he:"Frank Ruhl Libre","Times New Roman","Arial Hebrew",serif;
   --sans:"Helvetica Neue","Inter","Segoe UI",Arial,sans-serif;
+  --sans-he:"Assistant","Heebo","Arial Hebrew","Helvetica Neue",Arial,sans-serif;
 }
 @media (prefers-color-scheme:dark){
-  :root{
-    --shell:#0E110D; --panel:#161A14; --ink:#ECE7D8; --stone:#A39E8E;
-    --line:#2A2F26; --forest:#7FB8A6; --forest-2:#9cccbc; --brass:#C79B62;
-    --brass-deep:#D8B072; --ocean:#5DB6AE;
-    --shadow:0 1px 0 rgba(0,0,0,.3), 0 20px 46px -26px rgba(0,0,0,.7);
-  }
+  :root{--shell:#0E110D; --panel:#161A14; --ink:#ECE7D8; --stone:#A39E8E; --line:#2A2F26;
+    --forest:#7FB8A6; --forest-2:#9cccbc; --brass:#C79B62; --brass-deep:#D8B072; --ocean:#5DB6AE;
+    --shadow:0 1px 0 rgba(0,0,0,.3), 0 20px 46px -26px rgba(0,0,0,.7);}
 }
-:root[data-theme="dark"]{
-  --shell:#0E110D; --panel:#161A14; --ink:#ECE7D8; --stone:#A39E8E;
-  --line:#2A2F26; --forest:#7FB8A6; --forest-2:#9cccbc; --brass:#C79B62;
-  --brass-deep:#D8B072; --ocean:#5DB6AE;
-  --shadow:0 1px 0 rgba(0,0,0,.3), 0 20px 46px -26px rgba(0,0,0,.7);
-}
-:root[data-theme="light"]{
-  --shell:#F4EFE4; --panel:#FBF8F1; --ink:#191C17; --stone:#6B6658;
-  --line:#D8D0BE; --forest:#163F38; --forest-2:#22564D; --brass:#A97F4B;
-  --brass-deep:#8A662F; --ocean:#1C6E6A;
-  --shadow:0 1px 0 rgba(25,28,23,.04), 0 18px 40px -28px rgba(25,28,23,.35);
-}
+:root[data-theme="dark"]{--shell:#0E110D; --panel:#161A14; --ink:#ECE7D8; --stone:#A39E8E; --line:#2A2F26;
+  --forest:#7FB8A6; --forest-2:#9cccbc; --brass:#C79B62; --brass-deep:#D8B072; --ocean:#5DB6AE;
+  --shadow:0 1px 0 rgba(0,0,0,.3), 0 20px 46px -26px rgba(0,0,0,.7);}
+:root[data-theme="light"]{--shell:#F4EFE4; --panel:#FBF8F1; --ink:#191C17; --stone:#6B6658; --line:#D8D0BE;
+  --forest:#163F38; --forest-2:#22564D; --brass:#A97F4B; --brass-deep:#8A662F; --ocean:#1C6E6A;
+  --shadow:0 1px 0 rgba(25,28,23,.04), 0 18px 40px -28px rgba(25,28,23,.35);}
 
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;background:var(--shell);color:var(--ink);
-  font-family:var(--sans);font-size:16px;line-height:1.5;
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-}
+body{margin:0;background:var(--shell);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
 img{max-width:100%;display:block}
 .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
 
-/* ---------- shared type ---------- */
-.eyebrow{
-  font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.24em;
-  text-transform:uppercase;color:var(--brass-deep);margin:0;
-}
-h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;color:var(--ink)}
-.serif{font-family:var(--serif)}
-.tnum{font-variant-numeric:tabular-nums}
-.rule{height:1px;background:var(--line);border:0;margin:0}
+/* Hebrew doc uses Hebrew-friendly faces */
+.doc[lang="he"]{font-family:var(--sans-he)}
+.doc[lang="he"] h1,.doc[lang="he"] h2,.doc[lang="he"] h3{font-family:var(--serif-he);font-weight:700}
+.doc[lang="he"] .hero h1{font-weight:700;letter-spacing:0}
+.doc[lang="he"] .sub{font-style:normal}
+.doc[hidden]{display:none}
 
-/* ---------- page frame ---------- */
+/* language bar */
+.langbar{position:sticky;top:0;z-index:40;display:flex;justify-content:center;gap:0;
+  background:color-mix(in srgb,var(--shell) 88%,transparent);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);padding:9px 0}
+.langbar button{font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--line);background:var(--panel);color:var(--stone);padding:7px 18px;cursor:pointer;
+  transition:all .15s ease}
+.langbar button:first-child{border-radius:4px 0 0 4px;border-right:0}
+.langbar button:last-child{border-radius:0 4px 4px 0}
+.langbar button[aria-pressed="true"]{background:var(--forest);color:#F5F1E6;border-color:var(--forest)}
+.langbar button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+
+.eyebrow{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--brass-deep);margin:0}
+.doc[lang="he"] .eyebrow,.doc[lang="he"] .kicker,.doc[lang="he"] .snap .k,.doc[lang="he"] .k,
+.doc[lang="he"] .rev .card .tag,.doc[lang="he"] .pagehead,.doc[lang="he"] .cap,.doc[lang="he"] .qrcard .lab{letter-spacing:.04em}
+h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;color:var(--ink)}
+.tnum{font-variant-numeric:tabular-nums}
+.num-ltr{unicode-bidi:isolate}
+.doc[lang="he"] .num-ltr,.doc[lang="he"] .fig,.doc[lang="he"] .up,.doc[lang="he"] .val,.doc[lang="he"] .coord{direction:ltr;unicode-bidi:isolate}
+.doc[lang="he"] .rev .card .fig,.doc[lang="he"] .coord{text-align:right}
+.doc[lang="he"] .stats .fig{text-align:right}
+
 .page{position:relative;padding:0 0 68px}
 .page + .page{border-top:1px solid var(--line)}
-.pagehead{display:flex;justify-content:space-between;align-items:baseline;
-  padding:20px 0 0;color:var(--stone);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.pagehead{display:flex;justify-content:space-between;align-items:baseline;padding:20px 0 0;color:var(--stone);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
 .pagehead .n{font-family:var(--serif);font-size:13px;letter-spacing:.08em;color:var(--brass-deep)}
 
-/* ---------- hero ---------- */
 .hero{position:relative;height:min(64vh,560px);min-height:440px;overflow:hidden;background:linear-gradient(158deg,#173a34 0%,#0e211d 58%,#12332d 100%)}
-.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  filter:saturate(1.02) contrast(1.02)}
-.hero::after{content:"";position:absolute;inset:0;
-  background:radial-gradient(120% 90% at 78% 12%, rgba(169,127,75,.18) 0%, rgba(169,127,75,0) 55%), linear-gradient(180deg, rgba(9,13,9,.10) 0%, rgba(9,13,9,.05) 50%, rgba(9,13,9,.34) 100%)}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 78% 12%, rgba(169,127,75,.18) 0%, rgba(169,127,75,0) 55%), linear-gradient(180deg, rgba(9,13,9,.10) 0%, rgba(9,13,9,.05) 50%, rgba(9,13,9,.34) 100%)}
 .hero-inner{position:absolute;inset:auto 0 0 0;z-index:2;color:#F5F1E6}
 .hero-inner .wrap{padding-bottom:46px;padding-top:28px}
 .hero .kicker{color:#E7D9BD;font-size:11px;font-weight:600;letter-spacing:.28em;text-transform:uppercase}
 .hero h1{color:#FCF9F0;font-size:clamp(44px,7vw,86px);line-height:.98;letter-spacing:.005em;margin:.28em 0 .12em}
-.hero .sub{color:#EAE4D4;font-family:var(--serif);font-style:italic;font-size:clamp(16px,2.2vw,23px);max-width:32ch}
-.hero .toptag{position:absolute;top:0;left:0;right:0;z-index:2;
-  display:flex;justify-content:space-between;color:#EBE3D0;
-  font-size:11px;letter-spacing:.22em;text-transform:uppercase;padding:22px 0}
+.hero .sub{color:#EAE4D4;font-family:var(--serif);font-style:italic;font-size:clamp(16px,2.2vw,23px);max-width:34ch}
+.doc[lang="he"] .hero .sub{font-family:var(--serif-he)}
+.hero .toptag{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;justify-content:space-between;color:#EBE3D0;font-size:11px;letter-spacing:.22em;text-transform:uppercase;padding:22px 0}
 .hero .toptag .wrap{display:flex;justify-content:space-between;width:100%}
 
-/* ---------- snapshot band ---------- */
-.snap{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:0;
-  border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
-.snap .cell{padding:20px 22px;border-right:1px solid var(--line)}
-.snap .cell:last-child{border-right:0}
+.snap{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
+.snap .cell{padding:20px 22px;border-inline-end:1px solid var(--line)}
+.snap .cell:last-child{border-inline-end:0}
 .snap .k{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);margin:0 0 7px}
 .snap .v{font-family:var(--serif);font-size:19px;line-height:1.15;color:var(--ink)}
+.doc[lang="he"] .snap .v{font-family:var(--serif-he);font-weight:700}
 .snap .v small{display:block;font-family:var(--sans);font-size:12px;color:var(--stone);margin-top:4px;letter-spacing:0;text-transform:none}
+.doc[lang="he"] .snap .v small{font-family:var(--sans-he)}
 
 .amen{margin:14px 0 0;color:var(--stone);font-size:13.5px;line-height:1.7}
 .amen b{color:var(--forest);font-weight:600}
 
-/* ---------- section headings ---------- */
 .sec{margin-top:56px}
 .sec-h{display:flex;align-items:baseline;gap:16px;margin-bottom:22px}
 .sec-h h2{font-size:clamp(26px,3.4vw,38px);line-height:1.02}
 .sec-h .idx{font-family:var(--serif);font-size:15px;color:var(--brass);letter-spacing:.05em}
-.lead{font-size:16px;color:var(--stone);max-width:64ch;margin:0 0 8px}
+.lead{font-size:16px;color:var(--stone);max-width:66ch;margin:0 0 8px}
 
-/* ---------- highlights ---------- */
 .hl{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
 .hl .item{display:grid;grid-template-columns:auto 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--line)}
 .hl .item .num{font-family:var(--serif);font-size:15px;color:var(--brass);padding-top:2px;font-variant-numeric:tabular-nums}
 .hl .item p{margin:0;font-size:14.5px;line-height:1.5}
 .hl .item b{color:var(--ink);font-weight:600}
 
-/* ---------- locator / map ---------- */
 .locate{display:grid;grid-template-columns:1.4fr .9fr;gap:24px;margin-top:8px;align-items:stretch}
 .mapcard,.qrcard{background:var(--panel);border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow)}
 .mapcard{padding:22px 24px}
 .mapcard h3{font-size:20px;margin-bottom:4px}
 .mapcard .coord{font-family:var(--sans);font-size:12px;letter-spacing:.06em;color:var(--stone);margin-bottom:14px}
 .maprow{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px}
-.maprow .p{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--stone);max-width:150px}
+.maprow .p{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--stone);max-width:160px}
 .maprow .p .dot{width:9px;height:9px;border-radius:50%;margin-top:4px;flex:0 0 auto}
 .maprow .p b{color:var(--ink);display:block;font-weight:600;font-size:13px}
 .qrcard{padding:22px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;gap:12px}
-.qrcard img{width:132px;height:132px;image-rendering:pixelated;
-  border:8px solid #fff;border-radius:3px;background:#fff}
+.qrcard img{width:132px;height:132px;image-rendering:pixelated;border:8px solid #fff;border-radius:3px;background:#fff}
 .qrcard .lab{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone)}
 .qrcard .place{font-family:var(--serif);font-size:16px;color:var(--ink)}
-
-/* svg map colors adapt */
+.doc[lang="he"] .qrcard .place{font-family:var(--serif-he);font-weight:700}
 .svgmap{width:100%;height:auto;display:block;border-radius:3px;overflow:hidden}
 
-/* ---------- gallery ---------- */
-.gal{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:150px;gap:10px}
-.gal figure{margin:0;overflow:hidden;border-radius:3px;background:#0b0d0a;position:relative}
-.gal figure img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
-.gal figure:hover img{transform:scale(1.045)}
-.gal .wide{grid-column:span 2}
-.gal .tall{grid-row:span 2}
-.gal .big{grid-column:span 2;grid-row:span 2}
-.cap{margin-top:10px;font-size:11.5px;color:var(--stone);letter-spacing:.02em}
-
-/* ---------- market stats ---------- */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);
-  border-radius:4px;overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
-.stats .s{padding:22px 20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-.stats .s:nth-child(4n){border-right:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
+.stats .s{padding:22px 20px;border-inline-end:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stats .s:nth-child(4n){border-inline-end:0}
 .stats .s:nth-last-child(-n+4){border-bottom:0}
 .stats .fig{font-family:var(--serif);font-size:34px;line-height:1;color:var(--forest);letter-spacing:.005em}
+.doc[lang="he"] .stats .fig{font-family:var(--serif),var(--serif-he)}
 .stats .fig .u{font-size:16px;color:var(--brass-deep)}
 .stats .lab{margin-top:9px;font-size:12px;color:var(--stone);line-height:1.4}
 .marketgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px 40px;margin-top:22px}
 .mpoint{border-top:1px solid var(--line);padding-top:13px}
 .mpoint h4{font-family:var(--serif);font-size:17px;font-weight:400;margin:0 0 5px}
+.doc[lang="he"] .mpoint h4{font-family:var(--serif-he);font-weight:700}
 .mpoint p{margin:0;font-size:13px;color:var(--stone);line-height:1.5}
 
-/* ---------- revenue ---------- */
 .rev{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.rev .card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:18px 18px 16px;
-  display:flex;flex-direction:column;gap:8px;min-height:150px;box-shadow:var(--shadow)}
+.rev .card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px;min-height:150px;box-shadow:var(--shadow)}
 .rev .card .t{font-family:var(--serif);font-size:18px;line-height:1.1}
+.doc[lang="he"] .rev .card .t{font-family:var(--serif-he);font-weight:700}
 .rev .card .fig{font-size:14px;font-weight:600;color:var(--ocean);letter-spacing:.01em}
 .rev .card .d{font-size:12px;color:var(--stone);line-height:1.45;margin-top:auto}
 .rev .card .tag{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-deep)}
 
-/* ---------- ADR / gap visuals ---------- */
 .gapwrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:6px;align-items:start}
 .bars{display:flex;flex-direction:column;gap:14px;margin-top:6px}
-.bar{}
 .bar .top{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px}
 .bar .top b{font-weight:600;color:var(--ink)}
 .bar .top .val{color:var(--stone);font-variant-numeric:tabular-nums}
@@ -175,111 +151,82 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
 .lever p{margin:0;font-size:13px;line-height:1.5}
 .lever b{color:var(--ink);font-weight:600}
 
-/* ---------- thesis ---------- */
 .thesis{margin-top:52px;background:var(--forest);color:#F1EEE3;border-radius:6px;padding:40px 44px;position:relative;overflow:hidden}
 .thesis .eyebrow{color:#E4C89A}
 .thesis h2{color:#FCF9F0;font-size:clamp(24px,3vw,32px);margin:10px 0 16px}
-.thesis p{color:#E7E2D3;font-size:15.5px;line-height:1.62;max-width:70ch;margin:0}
+.thesis p{color:#E7E2D3;font-size:15.5px;line-height:1.62;max-width:72ch;margin:0}
 .thesis p + p{margin-top:14px}
 .thesis .own{margin-top:20px;font-size:12.5px;color:#C7CFC3;border-top:1px solid rgba(255,255,255,.16);padding-top:16px;line-height:1.55}
 .thesis .own b{color:#F1EEE3}
 
-/* ---------- footer ---------- */
-.foot{margin-top:44px;border-top:1px solid var(--line);padding-top:20px;
-  display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start}
-.foot .key{font-size:11px;color:var(--stone);line-height:1.7;max-width:74ch}
+.foot{margin-top:44px;border-top:1px solid var(--line);padding-top:20px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start}
+.foot .key{font-size:11px;color:var(--stone);line-height:1.7;max-width:76ch}
 .foot .key b{color:var(--ink)}
-.foot .brand{text-align:right;font-family:var(--serif);font-size:15px;color:var(--forest)}
+.foot .brand{text-align:end;font-family:var(--serif);font-size:15px;color:var(--forest)}
+.doc[lang="he"] .foot .brand{font-family:var(--serif-he);font-weight:700}
 .foot .brand small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);margin-top:5px}
-.disc{font-size:10.5px;color:var(--stone);line-height:1.55;margin-top:16px;max-width:100%}
+.disc{font-size:10.5px;color:var(--stone);line-height:1.55;margin-top:16px}
 
-/* ---------- responsive ---------- */
 @media(max-width:860px){
-  .snap{grid-template-columns:1fr 1fr}
-  .snap .cell:nth-child(2n){border-right:0}
-  .stats{grid-template-columns:1fr 1fr}
-  .stats .s:nth-child(4n){border-right:1px solid var(--line)}
-  .stats .s:nth-child(2n){border-right:0}
+  .snap{grid-template-columns:1fr 1fr}.snap .cell:nth-child(2n){border-inline-end:0}
+  .stats{grid-template-columns:1fr 1fr}.stats .s:nth-child(4n){border-inline-end:1px solid var(--line)}.stats .s:nth-child(2n){border-inline-end:0}
   .rev{grid-template-columns:1fr 1fr}
   .hl,.marketgrid,.gapwrap,.locate{grid-template-columns:1fr}
-  .gal{grid-template-columns:repeat(2,1fr)}
-  .gal .big{grid-column:span 2}
-  .foot{grid-template-columns:1fr}
-  .foot .brand{text-align:left}
+  .foot{grid-template-columns:1fr}.foot .brand{text-align:start}
 }
-@media(max-width:520px){
-  .snap{grid-template-columns:1fr}.snap .cell{border-right:0}
-  .rev{grid-template-columns:1fr}
-}
+@media(max-width:520px){.snap{grid-template-columns:1fr}.snap .cell{border-inline-end:0}.rev{grid-template-columns:1fr}}
 
-/* ---------- print ---------- */
 @media print{
   :root{--shell:#fff;--panel:#fff}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   body{background:#fff;font-size:10.5px;line-height:1.42}
+  .langbar{display:none!important}
   .wrap{max-width:none;padding:0 12mm}
   .fade{opacity:1!important;transform:none!important;animation:none!important}
   .page{padding-bottom:8mm}
   .page + .page{border-top:0}
   .hero{height:62mm;min-height:0}
-  .hero h1{font-size:52px}
-  .hero-inner .wrap{padding-bottom:22px;padding-top:16px}
+  .hero h1{font-size:50px}
+  .hero-inner .wrap{padding-bottom:20px;padding-top:14px}
   .pagehead{padding-top:10px}
-  .sec{margin-top:16px}
-  .sec-h{margin-bottom:12px}
-  .sec-h h2{font-size:26px}
-  .snap{margin-top:6px}
-  .snap .cell{padding:12px 14px}
-  .snap .v{font-size:16px}
+  .sec{margin-top:16px}.sec-h{margin-bottom:12px}.sec-h h2{font-size:26px}
+  .snap{margin-top:6px}.snap .cell{padding:12px 14px}.snap .v{font-size:16px}
   .amen{margin-top:9px;font-size:11px;line-height:1.5}
-  .locate{gap:14px;margin-top:4px}
-  .mapcard,.qrcard{padding:14px 16px}
-  .svgmap{max-height:150px}
-  .qrcard img{width:104px;height:104px}
-  .hl .item{padding:9px 0}
-  .hl .item p{font-size:11px;line-height:1.4}
-  .stats .s{padding:13px 12px}
-  .stats .fig{font-size:26px}
-  .marketgrid{margin-top:12px;gap:8px 32px}
-  .mpoint p{font-size:11px}
-  .rev{gap:8px}
-  .rev .card{min-height:0;padding:12px 13px;gap:5px}
-  .rev .card .t{font-size:15px}
-  .rev .card .d{font-size:10.5px;line-height:1.35}
+  .locate{gap:14px;margin-top:4px}.mapcard,.qrcard{padding:14px 16px}.svgmap{max-height:150px}.qrcard img{width:104px;height:104px}
+  .hl .item{padding:9px 0}.hl .item p{font-size:11px;line-height:1.4}
+  .stats .s{padding:13px 12px}.stats .fig{font-size:26px}
+  .marketgrid{margin-top:12px;gap:8px 32px}.mpoint p{font-size:11px}
+  .rev{gap:8px}.rev .card{min-height:0;padding:12px 13px;gap:5px}.rev .card .t{font-size:15px}.rev .card .d{font-size:10.5px;line-height:1.35}
   .gapwrap{gap:26px;margin-top:2px}
-  .thesis{margin-top:18px;padding:22px 26px}
-  .thesis h2{font-size:23px}
-  .thesis p{font-size:11.5px;line-height:1.5}
+  .thesis{margin-top:18px;padding:22px 26px}.thesis h2{font-size:23px}.thesis p{font-size:11.5px;line-height:1.5}
   .foot{margin-top:20px}
-  /* keep small cards intact, but let big sections flow to avoid whitespace */
-  .snap .cell,.stats .s,.rev .card,.hl .item,.mpoint,.lever,.bar,
-  .locate,.qrcard,.mapcard,.thesis,.sec-h,.gapwrap>div{break-inside:avoid;page-break-inside:avoid}
+  .snap .cell,.stats .s,.rev .card,.hl .item,.mpoint,.lever,.bar,.locate,.qrcard,.mapcard,.thesis,.sec-h,.gapwrap>div{break-inside:avoid;page-break-inside:avoid}
   a{color:inherit;text-decoration:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.fade{opacity:1!important;transform:none!important}}
 @page{size:A4;margin:12mm}
-
-/* subtle load fade */
 .fade{opacity:0;transform:translateY(8px);animation:rise .7s ease forwards}
 @keyframes rise{to{opacity:1;transform:none}}
 </style>
 
-<!-- ============================ PAGE 1 ============================ -->
-<section class="page" id="p1">
+<div class="langbar" role="group" aria-label="Language">
+  <button id="btn-en" aria-pressed="true" onclick="setLang('en')">English</button>
+  <button id="btn-he" aria-pressed="false" onclick="setLang('he')">עברית</button>
+</div>
+
+<!-- ================= ENGLISH ================= -->
+<main class="doc" id="doc-en" lang="en" dir="ltr">
+<section class="page">
   <div class="hero">
     <div class="toptag"><div class="wrap"><span>Private Investment Memorandum</span><span>Strictly Confidential · 2026</span></div></div>
-    <div class="hero-inner">
-      <div class="wrap fade">
-        <div class="kicker">Playa Pelada · Nosara · Nicoya Blue Zone, Costa Rica</div>
-        <h1>Ocean Breeze<br>Nosara</h1>
-        <div class="sub">A turnkey boutique resort &amp; retreat estate, three minutes above the Pacific.</div>
-      </div>
-    </div>
+    <div class="hero-inner"><div class="wrap fade">
+      <div class="kicker">Playa Pelada · Nosara · Nicoya Blue Zone, Costa Rica</div>
+      <h1>Ocean Breeze<br>Nosara</h1>
+      <div class="sub">A turnkey boutique resort &amp; retreat estate, three minutes above the Pacific.</div>
+    </div></div>
   </div>
-
   <div class="wrap">
     <div class="pagehead"><span>Executive Summary</span><span class="n">01 / 03</span></div>
-
     <div class="sec" style="margin-top:26px">
       <div class="snap">
         <div class="cell"><p class="k">The Asset</p><div class="v">Boutique resort<small>Hotel · retreat &amp; event estate</small></div></div>
@@ -290,44 +237,22 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
       </div>
       <p class="amen"><b>Signature infrastructure:</b> 40-ft infinity pool with 360° views · ocean-view yoga shala &amp; bar · air-conditioned fitness gym · Star Deck stargazing platform · “Rancho &amp; Kitchen” commercial social hall · 60,000-litre BioNest water-purification plant · property-wide fibre WiFi.</p>
     </div>
-
     <div class="sec locate">
       <div class="mapcard">
         <h3>Playa Pelada, Nosara</h3>
-        <div class="coord tnum">9.9558° N, 85.672° W · Guanacaste, Costa Rica</div>
-        <svg class="svgmap" viewBox="0 0 640 300" role="img" aria-label="Locator map of Ocean Breeze Nosara relative to Playa Pelada and Nosara town">
-          <defs>
-            <linearGradient id="sea" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="var(--ocean)" stop-opacity=".16"/>
-              <stop offset="1" stop-color="var(--ocean)" stop-opacity=".05"/>
-            </linearGradient>
-          </defs>
-          <rect x="0" y="0" width="640" height="300" fill="url(#sea)"/>
-          <!-- land -->
-          <path d="M250,300 C255,235 300,215 330,180 C360,146 350,110 385,80 C420,52 470,58 520,40 C575,20 640,25 640,25 L640,300 Z"
-                fill="var(--forest)" fill-opacity=".13" stroke="var(--forest)" stroke-opacity=".35" stroke-width="1.5"/>
-          <!-- coastline dashes -->
-          <path d="M250,300 C255,235 300,215 330,180 C360,146 350,110 385,80 C420,52 470,58 520,40 C575,20 640,25 640,25"
-                fill="none" stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="2 5" stroke-opacity=".7"/>
+        <div class="coord num-ltr">9.9558° N, 85.672° W · Guanacaste, Costa Rica</div>
+        <svg class="svgmap" viewBox="0 0 640 300" role="img" aria-label="Locator map">
+          <defs><linearGradient id="sea1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--ocean)" stop-opacity=".16"/><stop offset="1" stop-color="var(--ocean)" stop-opacity=".05"/></linearGradient></defs>
+          <rect width="640" height="300" fill="url(#sea1)"/>
+          <path d="M250,300 C255,235 300,215 330,180 C360,146 350,110 385,80 C420,52 470,58 520,40 C575,20 640,25 640,25 L640,300 Z" fill="var(--forest)" fill-opacity=".13" stroke="var(--forest)" stroke-opacity=".35" stroke-width="1.5"/>
+          <path d="M250,300 C255,235 300,215 330,180 C360,146 350,110 385,80 C420,52 470,58 520,40 C575,20 640,25 640,25" fill="none" stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="2 5" stroke-opacity=".7"/>
           <text x="90" y="150" font-family="var(--serif)" font-style="italic" font-size="19" fill="var(--ocean)" opacity=".75">Pacific Ocean</text>
-          <!-- points -->
           <g font-family="var(--sans)" font-size="12">
-            <!-- Nosara town -->
-            <circle cx="470" cy="92" r="4.5" fill="var(--stone)"/>
-            <text x="482" y="88" fill="var(--ink)">Nosara town</text>
-            <text x="482" y="103" fill="var(--stone)" font-size="10.5">bodega · dining · yoga</text>
-            <!-- Playa Pelada -->
-            <circle cx="322" cy="196" r="4.5" fill="var(--ocean)"/>
-            <text x="334" y="192" fill="var(--ink)">Playa Pelada</text>
-            <text x="334" y="207" fill="var(--stone)" font-size="10.5">tide-pool &amp; sunset cove</text>
-            <!-- property pin -->
-            <g>
-              <circle cx="360" cy="158" r="9" fill="var(--brass)" fill-opacity=".22"/>
-              <circle cx="360" cy="158" r="4.5" fill="var(--brass-deep)"/>
-              <line x1="360" y1="158" x2="322" y2="196" stroke="var(--brass)" stroke-width="1.3" stroke-dasharray="3 3"/>
-              <text x="372" y="150" font-family="var(--serif)" font-size="14" fill="var(--brass-deep)">Ocean Breeze</text>
-              <text x="372" y="165" fill="var(--stone)" font-size="10.5">3-min walk to beach</text>
-            </g>
+            <circle cx="470" cy="92" r="4.5" fill="var(--stone)"/><text x="482" y="88" fill="var(--ink)">Nosara town</text><text x="482" y="103" fill="var(--stone)" font-size="10.5">bodega · dining · yoga</text>
+            <circle cx="322" cy="196" r="4.5" fill="var(--ocean)"/><text x="334" y="192" fill="var(--ink)">Playa Pelada</text><text x="334" y="207" fill="var(--stone)" font-size="10.5">tide-pool &amp; sunset cove</text>
+            <circle cx="360" cy="158" r="9" fill="var(--brass)" fill-opacity=".22"/><circle cx="360" cy="158" r="4.5" fill="var(--brass-deep)"/>
+            <line x1="360" y1="158" x2="322" y2="196" stroke="var(--brass)" stroke-width="1.3" stroke-dasharray="3 3"/>
+            <text x="372" y="150" font-family="var(--serif)" font-size="14" fill="var(--brass-deep)">Ocean Breeze</text><text x="372" y="165" fill="var(--stone)" font-size="10.5">3-min walk to beach</text>
           </g>
         </svg>
         <div class="maprow">
@@ -336,19 +261,14 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
           <div class="p"><span class="dot" style="background:var(--stone)"></span><span><b>Nosara town</b>Minutes to dining &amp; wellness</span></div>
         </div>
       </div>
-      <div class="qrcard">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZoAAAGaAQMAAAAMyBcgAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP//8i138cAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAJ4SURBVHic7ZrNreQwDIMFpICUlNZdUgow4M2zSMmZnXfYPcrUIUg8/nwi9EOPjf8IEyRI0EbQbYhrdD/D35od41k9noV7vs04BNWHDojjevDRzufNzm7zEw8/aAxsFlQemvIg1A2fo2O/nTjyeQjaDUJ0zzj+1viroM2g0VlMCC2lRtBO0Aw0HzO7mIWMZk45fq9PgupBhvDffnsgBNWHMib+NBpTRnib3akd6zZBxaFMLJxIfC1GFT/NC9EpaAvIf2tsNNBtzINGyMj3CaoPUR6QkfekM7F0TrD5FqVGUF2IzQfyRyjIaHTCzoiMI6g4lLqxMDozk/y8TRMDRUdQfcgbje770YlyFw6y1xZBxSGPbpxM0WOs1rfR2GjvkVVQTSgGD+IQ1BntqH9+61gE1YRw3UEtzfgQj+vrugVtADEa5xAaG+GEz7UBaQmqDt2cTdB62rq1UUtpgguqDqU8RqjFMrtAUBZDi6Dy0DqyelyOw7pIEwO3poJqQ+FVYHjlbGInOtH0LwRtAcW06it+BuuN5xm6G++RVVBRiOJJBfl4er32+0EfXpigkpBHX647QP5su/iJM754YYKqQfkvirmLp/gZjY7WyGZVUHWIXvdMHTmMLEZnmF62lBpBlSE3J+6DGoryE2t+W5bOh6DaEFbMmE66QUY3bS2PpWMRVBXKWCQzOJGkllJagmpDNyVycT/+T8Gh5a/cI6g4RPEAiopyw7VY9r/mXEF1IUPDOcLEQJV5lRq0rYI2gj5uz2l5wuXq9lVGgkpDtt6HAcdlSB4pqDw0I5sPFBiu0fI0QZtAhohp1RXU8hLVMNUK2gL69xAkSNA20B+1LHfuTg58TwAAAABJRU5ErkJggg==" alt="QR code to Ocean Breeze Nosara on Google Maps">
-        <div class="place">Scan to open in Google Maps</div>
-        <div class="lab">oceanbreezenosara.com</div>
-      </div>
+      <div class="qrcard"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZoAAAGaAQMAAAAMyBcgAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP//8i138cAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAJ4SURBVHic7ZrNreQwDIMFpICUlNZdUgow4M2zSMmZnXfYPcrUIUg8/nwi9EOPjf8IEyRI0EbQbYhrdD/D35od41k9noV7vs04BNWHDojjevDRzufNzm7zEw8/aAxsFlQemvIg1A2fo2O/nTjyeQjaDUJ0zzj+1viroM2g0VlMCC2lRtBO0Aw0HzO7mIWMZk45fq9PgupBhvDffnsgBNWHMib+NBpTRnib3akd6zZBxaFMLJxIfC1GFT/NC9EpaAvIf2tsNNBtzINGyMj3CaoPUR6QkfekM7F0TrD5FqVGUF2IzQfyRyjIaHTCzoiMI6g4lLqxMDozk/y8TRMDRUdQfcgbje770YlyFw6y1xZBxSGPbpxM0WOs1rfR2GjvkVVQTSgGD+IQ1BntqH9+61gE1YRw3UEtzfgQj+vrugVtADEa5xAaG+GEz7UBaQmqDt2cTdB62rq1UUtpgguqDqU8RqjFMrtAUBZDi6Dy0DqyelyOw7pIEwO3poJqQ+FVYHjlbGInOtH0LwRtAcW06it+BuuN5xm6G++RVVBRiOJJBfl4er32+0EfXpigkpBHX647QP5su/iJM754YYKqQfkvirmLp/gZjY7WyGZVUHWIXvdMHTmMLEZnmF62lBpBlSE3J+6DGoryE2t+W5bOh6DaEFbMmE66QUY3bS2PpWMRVBXKWCQzOJGkllJagmpDNyVycT/+T8Gh5a/cI6g4RPEAiopyw7VY9r/mXEF1IUPDOcLEQJV5lRq0rYI2gj5uz2l5wuXq9lVGgkpDtt6HAcdlSB4pqDw0I5sPFBiu0fI0QZtAhohp1RXU8hLVMNUK2gL69xAkSNA20B+1LHfuTg58TwAAAABJRU5ErkJggg==" alt="QR to Google Maps"><div class="place">Scan to open in Google Maps</div><div class="lab">oceanbreezenosara.com</div></div>
     </div>
-
     <div class="sec">
       <div class="sec-h"><span class="idx">i.</span><h2>Investment Highlights</h2></div>
       <div class="hl">
         <div class="item"><span class="num">01</span><p><b>A rare full-property event asset in a supply-capped Blue Zone.</b> 10 units sleeping ~20, purpose-built for buyouts, where no-high-rise zoning and a protected forest buffer structurally cap new inventory.</p></div>
-        <div class="item"><span class="num">02</span><p><b>Riding Costa Rica’s fastest-growing gateway.</b> Liberia airport hit a record <span class="tnum">1.91M</span> passengers in 2024 (+16% YoY); Guanacaste’s share of national air arrivals nearly doubled to ~35.5%.</p></div>
-        <div class="item"><span class="num">03</span><p><b>An affluent, dollar-denominated demand base.</b> ~75% of Costa Rica arrivals are North American (US ~61%); 2025 tourism revenue set a record at <span class="tnum">$5.54B</span>.</p></div>
+        <div class="item"><span class="num">02</span><p><b>Riding Costa Rica’s fastest-growing gateway.</b> Liberia airport hit a record 1.91M passengers in 2024 (+16% YoY); Guanacaste’s share of national air arrivals nearly doubled to ~35.5%.</p></div>
+        <div class="item"><span class="num">03</span><p><b>An affluent, dollar-denominated demand base.</b> ~75% of Costa Rica arrivals are North American (US ~61%); 2025 tourism revenue set a record at $5.54B.</p></div>
         <div class="item"><span class="num">04</span><p><b>Weather-proof, year-round draw.</b> Neighbouring Playa Guiones surfs 320+ days a year, inside the world-famous Nicoya Blue Zone wellness capital — recession-resistant, multi-season demand.</p></div>
         <div class="item"><span class="num">05</span><p><b>Premium, appreciating micro-market.</b> Playa Pelada homes trade from the mid-$500Ks into the multimillions; Nosara has appreciated ~8–12% a year over the past decade.</p></div>
         <div class="item"><span class="num">06</span><p><b>Clear operating alpha.</b> The market runs only ~40–56% occupancy at ~$333 ADR versus a $400–$495 branded-retreat band — a repositioning gap this asset is built to close.</p></div>
@@ -356,21 +276,16 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
     </div>
   </div>
 </section>
-
-<!-- ============================ PAGE 2 ============================ -->
-<section class="page" id="p2">
+<section class="page">
   <div class="wrap">
     <div class="pagehead"><span>The Opportunity</span><span class="n">02 / 03</span></div>
-
-    
-
-    <div class="sec">
+    <div class="sec" style="margin-top:22px">
       <div class="sec-h"><span class="idx">ii.</span><h2>Why Nosara, Why Now</h2></div>
       <p class="lead">A branded, weather-proof lifestyle market with a fast-growing, affluent-skewed demand pipeline and hard limits on new supply — the classic setup for durable premium pricing.</p>
       <div class="stats">
-        <div class="s"><div class="fig tnum">1.91<span class="u">M</span></div><div class="lab">Liberia (LIR) airport passengers in 2024, <b>+16% YoY</b> — a record</div></div>
-        <div class="s"><div class="fig tnum">~75<span class="u">%</span></div><div class="lab">of arrivals are North American; the US alone ~61% — high-income, dollar-based</div></div>
-        <div class="s"><div class="fig tnum">320<span class="u">+</span></div><div class="lab">surfable days a year at neighbouring Playa Guiones — year-round demand</div></div>
+        <div class="s"><div class="fig num-ltr">1.91<span class="u">M</span></div><div class="lab">Liberia (LIR) airport passengers in 2024, <b>+16% YoY</b> — a record</div></div>
+        <div class="s"><div class="fig num-ltr">~75<span class="u">%</span></div><div class="lab">of arrivals are North American; the US alone ~61% — high-income, dollar-based</div></div>
+        <div class="s"><div class="fig num-ltr">320<span class="u">+</span></div><div class="lab">surfable days a year at neighbouring Playa Guiones — year-round demand</div></div>
         <div class="s"><div class="fig">Blue<span class="u"> Zone</span></div><div class="lab">Nicoya — one of five global longevity zones; Nosara is its wellness capital</div></div>
       </div>
       <div class="marketgrid">
@@ -380,7 +295,6 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
         <div class="mpoint"><h4>Affluent audience</h4><p>Nosara draws Silicon Valley executives, wellness entrepreneurs and affluent families — a low-price-sensitivity pool buying second homes and paying premium rates.</p></div>
       </div>
     </div>
-
     <div class="sec">
       <div class="sec-h"><span class="idx">iii.</span><h2>Revenue Opportunities</h2></div>
       <p class="lead">Ten purpose-built units let one asset sell across leisure, wellness and full-property events — filling the calendar and pricing each week to its highest use.</p>
@@ -397,12 +311,9 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
     </div>
   </div>
 </section>
-
-<!-- ============================ PAGE 3 ============================ -->
-<section class="page" id="p3">
+<section class="page">
   <div class="wrap">
     <div class="pagehead"><span>Investment Potential</span><span class="n">03 / 03</span></div>
-
     <div class="sec" style="margin-top:22px">
       <div class="sec-h"><span class="idx">iv.</span><h2>The Value-Creation Gap</h2></div>
       <p class="lead">The asset trades into a market where independent operators leave money on the table twice over — on rate and on occupancy. Both gaps are executable.</p>
@@ -410,28 +321,27 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
         <div>
           <p class="eyebrow" style="margin-bottom:14px">Rate — blended ADR, per night</p>
           <div class="bars">
-            <div class="bar"><div class="top"><b>Independent operator today</b><span class="val tnum">~$333</span></div><div class="track"><div class="fill" style="width:55%;background:var(--stone)"></div></div></div>
-            <div class="bar"><div class="top"><b>Boutique-luxury going band</b><span class="val tnum">$400–$500</span></div><div class="track"><div class="fill" style="width:74%;background:var(--ocean)"></div></div></div>
-            <div class="bar"><div class="top"><b>Branded-retreat ceiling</b><span class="val tnum">$495+</span></div><div class="track"><div class="fill" style="width:88%;background:var(--forest)"></div></div></div>
+            <div class="bar"><div class="top"><b>Independent operator today</b><span class="val num-ltr">~$333</span></div><div class="track"><div class="fill" style="width:55%;background:var(--stone)"></div></div></div>
+            <div class="bar"><div class="top"><b>Boutique-luxury going band</b><span class="val num-ltr">$400–$500</span></div><div class="track"><div class="fill" style="width:74%;background:var(--ocean)"></div></div></div>
+            <div class="bar"><div class="top"><b>Branded-retreat ceiling</b><span class="val num-ltr">$495+</span></div><div class="track"><div class="fill" style="width:88%;background:var(--forest)"></div></div></div>
           </div>
           <p class="legend"><b>Comps:</b> Silvestre ~$469 · Gilded Iguana ~$471 · Bodhi Tree ~$451–$572 · Harmony ~$252–$430. New branded luxury nearby (Ritz-Carlton Reserve, Waldorf Astoria) is lifting the whole comp-set ceiling.</p>
         </div>
         <div>
           <p class="eyebrow" style="margin-bottom:14px">Occupancy — annual blended</p>
           <div class="bars">
-            <div class="bar"><div class="top"><b>Market today</b><span class="val tnum">~40–56%</span></div><div class="track"><div class="fill" style="width:48%;background:var(--stone)"></div></div></div>
-            <div class="bar"><div class="top"><b>Stabilised target</b><span class="val tnum">~65–70%</span></div><div class="track"><div class="fill" style="width:68%;background:var(--forest)"></div></div></div>
+            <div class="bar"><div class="top"><b>Market today</b><span class="val num-ltr">~40–56%</span></div><div class="track"><div class="fill" style="width:48%;background:var(--stone)"></div></div></div>
+            <div class="bar"><div class="top"><b>Stabilised target</b><span class="val num-ltr">~65–70%</span></div><div class="track"><div class="fill" style="width:68%;background:var(--forest)"></div></div></div>
           </div>
           <p class="legend">High season already runs 85–95%. The single biggest lever is filling the low-season trough (~28–30%) with mid-week retreat, corporate and buyout programming the market doesn’t chase.</p>
           <div class="levers">
-            <div class="lever"><span class="up">+10–20%</span><p><b>Soft-brand affiliation</b> (SLH / Preferred-type) — low-capex RevPAR-index uplift via global distribution and loyalty.</p></div>
-            <div class="lever"><span class="up">+15–30%</span><p><b>ADR reposition</b> into the branded-luxury comp set now forming around Nosara.</p></div>
-            <div class="lever"><span class="up">2.5–3×</span><p><b>Direct-booking shift</b> — reclaim 18–25% OTA commissions; direct guests carry far higher lifetime value.</p></div>
+            <div class="lever"><span class="up num-ltr">+10–20%</span><p><b>Soft-brand affiliation</b> (SLH / Preferred-type) — low-capex RevPAR-index uplift via global distribution and loyalty.</p></div>
+            <div class="lever"><span class="up num-ltr">+15–30%</span><p><b>ADR reposition</b> into the branded-luxury comp set now forming around Nosara.</p></div>
+            <div class="lever"><span class="up num-ltr">2.5–3×</span><p><b>Direct-booking shift</b> — reclaim 18–25% OTA commissions; direct guests carry far higher lifetime value.</p></div>
           </div>
         </div>
       </div>
     </div>
-
     <div class="thesis">
       <p class="eyebrow">The Investment Thesis</p>
       <h2>An under-branded, under-distributed asset in Costa Rica’s most defensible market.</h2>
@@ -439,21 +349,176 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
       <p>Against that backdrop the asset trades into a market where independents run only ~40–56% occupancy at ~$333 ADR versus a $400–$495 branded-retreat band. A classic value-creation playbook — soft-brand affiliation, ADR reposition into the new branded-luxury comp set, occupancy recovery through mid-week retreat and corporate buyouts, high-margin owned wellness programming, and an OTA-to-direct margin shift — can plausibly move stabilised NOI toward 1.6–2.0× entry and re-rate the asset from “independent” to “branded luxury retreat,” with ~8–10%/yr land appreciation on irreplaceable, titled Playa Pelada dirt as the downside cushion.</p>
       <div class="own"><b>Ownership &amp; diligence.</b> Foreigners hold fee-simple title identical to citizens — buy, sell, mortgage, rent and repatriate freely, no residency required. Target titled inland/ocean-view parcels to stay clear of the 200-metre Maritime Zone concession. Because no in-place financials are disclosed, asking price, occupancy, ADR, land size and title status are mandatory buyer due-diligence items.</div>
     </div>
-
     <div class="foot">
-      <div class="key">
-        <b>Confidence key.</b> Figures in this memorandum are drawn from the property’s own materials, public tourism and airport data, competitor rate sampling, and market benchmarks. Property specifics (units, amenities, location) are stated by the operator; market, ADR, occupancy, yield and appreciation figures are benchmarked or estimated from third-party sources and should be independently verified. <b>No asking price, occupancy or revenue has been publicly disclosed.</b>
-      </div>
+      <div class="key"><b>Confidence key.</b> Figures in this memorandum are drawn from the property’s own materials, public tourism and airport data, competitor rate sampling, and market benchmarks. Property specifics (units, amenities, location) are stated by the operator; market, ADR, occupancy, yield and appreciation figures are benchmarked or estimated from third-party sources and should be independently verified. <b>No asking price, occupancy or revenue has been publicly disclosed.</b></div>
       <div class="brand">Ocean Breeze Nosara<small>Investment Memorandum · 2026</small></div>
     </div>
     <p class="disc">Prepared for private circulation to prospective investors. This document is an informational summary, not an offer to sell or a solicitation, and does not constitute investment, tax or legal advice. All forward-looking figures are illustrative and subject to due diligence. Sources include oceanbreezenosara.com, ICT / Tico Times tourism data, Guanacaste Airport statistics, and competitor rate listings (Mr &amp; Mrs Smith, KAYAK, Tripadvisor).</p>
   </div>
 </section>
+</main>
+
+<!-- ================= HEBREW (RTL) ================= -->
+<main class="doc" id="doc-he" lang="he" dir="rtl" hidden>
+<section class="page">
+  <div class="hero">
+    <div class="toptag"><div class="wrap"><span>מזכר השקעה פרטי</span><span>חסוי · 2026</span></div></div>
+    <div class="hero-inner"><div class="wrap fade">
+      <div class="kicker">פלאיה פלאדה · נוסארה · אזור התכלת ניקויה, קוסטה ריקה</div>
+      <h1>Ocean Breeze<br>Nosara</h1>
+      <div class="sub">אחוזת נופש בוטיק פעילה ומוכנה, שלוש דקות מעל האוקיינוס השקט.</div>
+    </div></div>
+  </div>
+  <div class="wrap">
+    <div class="pagehead"><span>תמצית מנהלים</span><span class="n num-ltr">01 / 03</span></div>
+    <div class="sec" style="margin-top:26px">
+      <div class="snap">
+        <div class="cell"><p class="k">הנכס</p><div class="v">נופש בוטיק<small>מלון · אחוזת אירועים ונופש</small></div></div>
+        <div class="cell"><p class="k">אירוח</p><div class="v">10 יחידות<small>6 קזיטות + 4 דירות · עד 16–20 אורחים</small></div></div>
+        <div class="cell"><p class="k">החוף</p><div class="v">3 דק' הליכה<small>למפרץ פלאיה פלאדה</small></div></div>
+        <div class="cell"><p class="k">הסביבה</p><div class="v">ג'ונגל ואוקיינוס<small>מגרש מוגבה עם נוף לפסיפיק</small></div></div>
+        <div class="cell"><p class="k">נגישות</p><div class="v">כ-2 שעות<small>לנמל התעופה ליבריה (LIR)</small></div></div>
+      </div>
+      <p class="amen"><b>תשתית ייחודית:</b> בריכת אינפיניטי באורך 12 מ' עם נוף 360° · שאלת יוגה ובר עם נוף לאוקיינוס · חדר כושר ממוזג · פלטפורמת צפייה בכוכבים “Star Deck” · אולם חברתי “Rancho &amp; Kitchen” עם מטבח מסחרי · מתקן טיהור מים BioNest בנפח 60,000 ליטר · אינטרנט סיבים בכל השטח.</p>
+    </div>
+    <div class="sec locate">
+      <div class="mapcard">
+        <h3>פלאיה פלאדה, נוסארה</h3>
+        <div class="coord num-ltr">9.9558° N, 85.672° W · Guanacaste, Costa Rica</div>
+        <svg class="svgmap" viewBox="0 0 640 300" role="img" aria-label="מפת מיקום">
+          <defs><linearGradient id="sea2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--ocean)" stop-opacity=".16"/><stop offset="1" stop-color="var(--ocean)" stop-opacity=".05"/></linearGradient></defs>
+          <rect width="640" height="300" fill="url(#sea2)"/>
+          <path d="M250,300 C255,235 300,215 330,180 C360,146 350,110 385,80 C420,52 470,58 520,40 C575,20 640,25 640,25 L640,300 Z" fill="var(--forest)" fill-opacity=".13" stroke="var(--forest)" stroke-opacity=".35" stroke-width="1.5"/>
+          <path d="M250,300 C255,235 300,215 330,180 C360,146 350,110 385,80 C420,52 470,58 520,40 C575,20 640,25 640,25" fill="none" stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="2 5" stroke-opacity=".7"/>
+          <text x="90" y="150" font-family="var(--serif-he)" font-size="18" fill="var(--ocean)" opacity=".78" direction="rtl">האוקיינוס השקט</text>
+          <g font-family="var(--sans-he)" font-size="12" direction="rtl">
+            <circle cx="470" cy="92" r="4.5" fill="var(--stone)"/><text x="458" y="88" fill="var(--ink)" text-anchor="end">העיירה נוסארה</text><text x="458" y="103" fill="var(--stone)" font-size="10.5" text-anchor="end">מכולת · מסעדות · יוגה</text>
+            <circle cx="322" cy="196" r="4.5" fill="var(--ocean)"/><text x="310" y="192" fill="var(--ink)" text-anchor="end">פלאיה פלאדה</text><text x="310" y="207" fill="var(--stone)" font-size="10.5" text-anchor="end">בריכות גאות ומפרץ שקיעה</text>
+            <circle cx="360" cy="158" r="9" fill="var(--brass)" fill-opacity=".22"/><circle cx="360" cy="158" r="4.5" fill="var(--brass-deep)"/>
+            <line x1="360" y1="158" x2="322" y2="196" stroke="var(--brass)" stroke-width="1.3" stroke-dasharray="3 3"/>
+            <text x="348" y="150" font-family="var(--serif)" font-size="14" fill="var(--brass-deep)" text-anchor="end">Ocean Breeze</text><text x="348" y="165" fill="var(--stone)" font-size="10.5" text-anchor="end">3 דק' הליכה לחוף</text>
+          </g>
+        </svg>
+        <div class="maprow">
+          <div class="p"><span class="dot" style="background:var(--brass-deep)"></span><span><b>האחוזה</b>מגרש מוגבה בחופת ג'ונגל</span></div>
+          <div class="p"><span class="dot" style="background:var(--ocean)"></span><span><b>פלאיה פלאדה</b>3 דקות הליכה · מפרץ שקט</span></div>
+          <div class="p"><span class="dot" style="background:var(--stone)"></span><span><b>העיירה נוסארה</b>דקות ממסעדות ובריאות</span></div>
+        </div>
+      </div>
+      <div class="qrcard"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZoAAAGaAQMAAAAMyBcgAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP//8i138cAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAJ4SURBVHic7ZrNreQwDIMFpICUlNZdUgow4M2zSMmZnXfYPcrUIUg8/nwi9EOPjf8IEyRI0EbQbYhrdD/D35od41k9noV7vs04BNWHDojjevDRzufNzm7zEw8/aAxsFlQemvIg1A2fo2O/nTjyeQjaDUJ0zzj+1viroM2g0VlMCC2lRtBO0Aw0HzO7mIWMZk45fq9PgupBhvDffnsgBNWHMib+NBpTRnib3akd6zZBxaFMLJxIfC1GFT/NC9EpaAvIf2tsNNBtzINGyMj3CaoPUR6QkfekM7F0TrD5FqVGUF2IzQfyRyjIaHTCzoiMI6g4lLqxMDozk/y8TRMDRUdQfcgbje770YlyFw6y1xZBxSGPbpxM0WOs1rfR2GjvkVVQTSgGD+IQ1BntqH9+61gE1YRw3UEtzfgQj+vrugVtADEa5xAaG+GEz7UBaQmqDt2cTdB62rq1UUtpgguqDqU8RqjFMrtAUBZDi6Dy0DqyelyOw7pIEwO3poJqQ+FVYHjlbGInOtH0LwRtAcW06it+BuuN5xm6G++RVVBRiOJJBfl4er32+0EfXpigkpBHX647QP5su/iJM754YYKqQfkvirmLp/gZjY7WyGZVUHWIXvdMHTmMLEZnmF62lBpBlSE3J+6DGoryE2t+W5bOh6DaEFbMmE66QUY3bS2PpWMRVBXKWCQzOJGkllJagmpDNyVycT/+T8Gh5a/cI6g4RPEAiopyw7VY9r/mXEF1IUPDOcLEQJV5lRq0rYI2gj5uz2l5wuXq9lVGgkpDtt6HAcdlSB4pqDw0I5sPFBiu0fI0QZtAhohp1RXU8hLVMNUK2gL69xAkSNA20B+1LHfuTg58TwAAAABJRU5ErkJggg==" alt="קוד QR ל-Google Maps"><div class="place">סרקו לפתיחה ב-Google Maps</div><div class="lab">oceanbreezenosara.com</div></div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><span class="idx num-ltr">i.</span><h2>עיקרי ההשקעה</h2></div>
+      <div class="hl">
+        <div class="item"><span class="num num-ltr">01</span><p><b>נכס אירועים נדיר לרכישה מלאה באזור תכלת מוגבל-היצע.</b> 10 יחידות לכ-20 אורחים, בנוי ייעודית להשכרה מלאה, באזור שבו איסור בנייה לגובה ורצועת יער מוגנת מגבילים מבנית היצע חדש.</p></div>
+        <div class="item"><span class="num num-ltr">02</span><p><b>רכיבה על שער הכניסה הצומח ביותר בקוסטה ריקה.</b> נמל התעופה ליבריה שבר שיא עם 1.91 מיליון נוסעים ב-2024 (+16% שנתי); חלקה של גואנקסטה בכניסות האוויר הלאומיות כמעט הוכפל לכ-35.5%.</p></div>
+        <div class="item"><span class="num num-ltr">03</span><p><b>בסיס ביקוש אמיד, נקוב בדולרים.</b> כ-75% מהמבקרים בקוסטה ריקה הם צפון-אמריקאים (ארה"ב ~61%); הכנסות התיירות ב-2025 שברו שיא של 5.54 מיליארד דולר.</p></div>
+        <div class="item"><span class="num num-ltr">04</span><p><b>משיכה כל-עונתית, חסינת מזג-אוויר.</b> חוף גיונס הסמוך גליש מעל 320 ימים בשנה, בלב בירת הבריאות המפורסמת של אזור התכלת ניקויה — ביקוש רב-עונתי, חסין מיתון.</p></div>
+        <div class="item"><span class="num num-ltr">05</span><p><b>שוק-מיקרו יוקרתי במגמת עלייה.</b> בתים בפלאיה פלאדה נסחרים מאמצע ה-500 אלף דולר ועד מיליוני דולרים; נוסארה עלתה בכ-8–12% בשנה בעשור האחרון.</p></div>
+        <div class="item"><span class="num num-ltr">06</span><p><b>אלפא תפעולית ברורה.</b> השוק פועל בתפוסה של ~40–56% בלבד ב-ADR של ~$333 מול טווח של $400–$495 לנופש ממותג — פער מיצוב שהנכס בנוי לסגור.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="page">
+  <div class="wrap">
+    <div class="pagehead"><span>ההזדמנות</span><span class="n num-ltr">02 / 03</span></div>
+    <div class="sec" style="margin-top:22px">
+      <div class="sec-h"><span class="idx num-ltr">ii.</span><h2>למה נוסארה, למה עכשיו</h2></div>
+      <p class="lead">שוק אורח-חיים ממותג וחסין מזג-אוויר, עם צינור ביקוש צומח ואמיד ומגבלות חמורות על היצע חדש — המתכון הקלאסי לתמחור פרימיום בר-קיימא.</p>
+      <div class="stats">
+        <div class="s"><div class="fig num-ltr">1.91<span class="u">M</span></div><div class="lab">נוסעים בנמל התעופה ליבריה (LIR) ב-2024, <b>+16% שנתי</b> — שיא</div></div>
+        <div class="s"><div class="fig num-ltr">~75<span class="u">%</span></div><div class="lab">מהמבקרים צפון-אמריקאים; ארה"ב לבדה ~61% — הכנסה גבוהה, מבוסס-דולר</div></div>
+        <div class="s"><div class="fig num-ltr">320<span class="u">+</span></div><div class="lab">ימי גלישה בשנה בחוף גיונס הסמוך — ביקוש כל-עונתי</div></div>
+        <div class="s"><div class="fig">Blue<span class="u"> Zone</span></div><div class="lab">ניקויה — אחד מחמישה אזורי אריכות-ימים בעולם; נוסארה היא בירת הבריאות שלו</div></div>
+      </div>
+      <div class="marketgrid">
+        <div class="mpoint"><h4>חפיר בריאות</h4><p>מעוגן במכון היוגה של נוסארה, Bodhi Tree ו-Blue Spirit. תיירות הבריאות בקוסטה ריקה ≈ 1.2 מיליארד דולר, צומחת ~16% בשנה — מטיילים שמוציאים הרבה יותר ונשארים לאורך זמן.</p></div>
+        <div class="mpoint"><h4>רוח גבית של נוודים דיגיטליים</h4><p>ויזת הנוודים של קוסטה ריקה (פטורה ממס על הכנסה זרה) יחד עם סיבים, בתי ספר דו-לשוניים ובתי קפה הופכים מבקרים לשוכרים לטווח ארוך — ומרימים את שפל העונה הירוקה.</p></div>
+        <div class="mpoint"><h4>היצע מוגבל</h4><p>תכנון בצפיפות נמוכה ורצועת יער מוגנת שומרים על מלאי נדיר והליך. פלאיה פלאדה היא המפרץ השקט והבלעדי יותר מצפון לחוף הגלישה.</p></div>
+        <div class="mpoint"><h4>קהל אמיד</h4><p>נוסארה מושכת מנהלי היי-טק, יזמי בריאות ומשפחות אמידות — קהל בעל רגישות-מחיר נמוכה שקונה בתי נופש ומשלם תעריפי פרימיום.</p></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><span class="idx num-ltr">iii.</span><h2>הזדמנויות הכנסה</h2></div>
+      <p class="lead">עשר יחידות ייעודיות מאפשרות לנכס אחד למכור פנאי, בריאות ואירועי-נכס-מלא — למלא את היומן ולתמחר כל שבוע לשימוש המשתלם ביותר.</p>
+      <div class="rev">
+        <div class="card"><span class="tag">עומס בסיס</span><div class="t">מלון בוטיק</div><div class="fig num-ltr">$333–$495 / לילה</div><div class="d">ביקוש ללינות בתעריף השוק, במיקוד לרבעון העליון של ההכנסות עם ניהול מקצועי.</div></div>
+        <div class="card"><span class="tag">נכס מלא</span><div class="t">השכרות מלאות</div><div class="fig num-ltr">$2,400–$5,000 / לילה</div><div class="d">מנגנון התמחור לכל קבוצה גדולה; שבועות חג מגיעים ל-$3.5k–$10k+, מוזמנים 9–18 חודשים מראש.</div></div>
+        <div class="card"><span class="tag">בריאות</span><div class="t">ריטריטי יוגה</div><div class="fig num-ltr">~$22k–$30k / שבוע</div><div class="d">הכנסת הנכס כשמוביל חיצוני ממלא ~15 אורחים; 20–30 שבועות ריטריט בשנה הם ריאליים.</div></div>
+        <div class="card"><span class="tag">התשואה היומית הגבוהה</span><div class="t">כנסי חברות</div><div class="fig num-ltr">~$100k+ / אירוע</div><div class="d">ריטריט הנהלה ל-25 איש ל-4 לילות — ממלא תפוסה אידיאלי בעונת הביניים.</div></div>
+        <div class="card"><span class="tag">כל השנה</span><div class="t">מחנות גלישה</div><div class="fig num-ltr">$900–$4,790 / אורח</div><div class="d">גלישה-ויוגה הוא הפורמט המקומי הדומיננטי ויכול לעגן 20–30+ שבועות של ביקוש בסיס.</div></div>
+        <div class="card"><span class="tag">מדיה בבעלות</span><div class="t">ריטריטי יוצרים</div><div class="fig num-ltr">$50k–$150k+ / השכרה</div><div class="d">מותגים מכנסים יוצרים לצילומים רב-יומיים — הכנסה שמשמשת גם כשיווק ותוכן גולשים.</div></div>
+        <div class="card"><span class="tag">אירוע מיוחד</span><div class="t">מפגשי משפחה</div><div class="fig num-ltr">$10k–$50k+ / שבוע</div><div class="d">השכרת אחוזה שלמה ל-16–20 אורחים, סביב חגים וחגיגות; 3–8 אירועים בשנה.</div></div>
+        <div class="card"><span class="tag">ערך שיא</span><div class="t">חתונות ואירועים</div><div class="fig num-ltr">$450–$750 / אורח</div><div class="d">הוצאה ביום האירוע מעבר להשכרת הנכס המלא — השימוש בעל הערך הגבוה ביותר ביומן.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="page">
+  <div class="wrap">
+    <div class="pagehead"><span>פוטנציאל ההשקעה</span><span class="n num-ltr">03 / 03</span></div>
+    <div class="sec" style="margin-top:22px">
+      <div class="sec-h"><span class="idx num-ltr">iv.</span><h2>פער יצירת הערך</h2></div>
+      <p class="lead">הנכס נכנס לשוק שבו מפעילים עצמאיים מפספסים כסף פעמיים — גם בתעריף וגם בתפוסה. שני הפערים ניתנים למימוש.</p>
+      <div class="gapwrap">
+        <div>
+          <p class="eyebrow" style="margin-bottom:14px">תעריף — ADR משוקלל, ללילה</p>
+          <div class="bars">
+            <div class="bar"><div class="top"><b>מפעיל עצמאי כיום</b><span class="val num-ltr">~$333</span></div><div class="track"><div class="fill" style="width:55%;background:var(--stone)"></div></div></div>
+            <div class="bar"><div class="top"><b>טווח יוקרת-בוטיק בשוק</b><span class="val num-ltr">$400–$500</span></div><div class="track"><div class="fill" style="width:74%;background:var(--ocean)"></div></div></div>
+            <div class="bar"><div class="top"><b>תקרת נופש ממותג</b><span class="val num-ltr">$495+</span></div><div class="track"><div class="fill" style="width:88%;background:var(--forest)"></div></div></div>
+          </div>
+          <p class="legend"><b>השוואות:</b> Silvestre ~$469 · Gilded Iguana ~$471 · Bodhi Tree ~$451–$572 · Harmony ~$252–$430. יוקרה ממותגת חדשה בסביבה (Ritz-Carlton Reserve, Waldorf Astoria) מרימה את תקרת קבוצת ההשוואה.</p>
+        </div>
+        <div>
+          <p class="eyebrow" style="margin-bottom:14px">תפוסה — שנתית משוקללת</p>
+          <div class="bars">
+            <div class="bar"><div class="top"><b>השוק כיום</b><span class="val num-ltr">~40–56%</span></div><div class="track"><div class="fill" style="width:48%;background:var(--stone)"></div></div></div>
+            <div class="bar"><div class="top"><b>יעד מיוצב</b><span class="val num-ltr">~65–70%</span></div><div class="track"><div class="fill" style="width:68%;background:var(--forest)"></div></div></div>
+          </div>
+          <p class="legend">העונה הגבוהה כבר בתפוסת 85–95%. המנוף הגדול ביותר הוא מילוי שפל העונה הנמוכה (~28–30%) בתוכניות ריטריט, חברות והשכרות באמצע השבוע שהשוק אינו רודף אחריהן.</p>
+          <div class="levers">
+            <div class="lever"><span class="up num-ltr">+10–20%</span><p><b>שיוך סופט-ברנד</b> (SLH / Preferred) — עליית מדד RevPAR בהשקעה נמוכה דרך הפצה עולמית ונאמנות.</p></div>
+            <div class="lever"><span class="up num-ltr">+15–30%</span><p><b>מיצוב ADR מחדש</b> לקבוצת יוקרה-ממותגת המתגבשת סביב נוסארה.</p></div>
+            <div class="lever"><span class="up num-ltr">2.5–3×</span><p><b>מעבר להזמנה ישירה</b> — החזרת 18–25% עמלות OTA; לאורחים ישירים ערך-חיים גבוה בהרבה.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="thesis">
+      <p class="eyebrow">תזת ההשקעה</p>
+      <h2>נכס תת-ממותג ותת-מופץ בשוק המוגן ביותר בקוסטה ריקה.</h2>
+      <p>Ocean Breeze Nosara הוא נכס אירועים לרכישה מלאה, בנוי ייעודית, בפינה המוגבלת-היצע והמוגנת-מיתוג ביותר באזור התיירות הצומח ביותר בקוסטה ריקה. צד הביקוש חזק מבנית ונוטה לאמידים — תעבורת שיא בליבריה, ~75% מבקרים צפון-אמריקאים, מותג בריאות של אזור תכלת, ומעל 320 ימי גלישה בשנה — בעוד ההיצע מוגבל באיסור בנייה לגובה וברצועת יער מוגנת.</p>
+      <p>על רקע זה הנכס נכנס לשוק שבו עצמאיים פועלים בתפוסה של ~40–56% בלבד ב-ADR של ~$333 מול טווח $400–$495 לנופש ממותג. ספר-משחקים קלאסי ליצירת ערך — שיוך סופט-ברנד, מיצוב ADR מחדש לקבוצת היוקרה הממותגת החדשה, שיקום תפוסה דרך ריטריטים והשכרות חברה באמצע השבוע, תוכניות בריאות בבעלות ברווחיות גבוהה, ומעבר מ-OTA להזמנה ישירה — יכולים להזיז NOI מיוצב לכיוון 1.6–2.0× מהכניסה ולמצב מחדש את הנכס מ"עצמאי" ל"נופש יוקרה ממותג", עם עליית ערך קרקע של ~8–10% בשנה על אדמה מוסדרת ובלתי-ניתנת-לשחזור בפלאיה פלאדה כרשת ביטחון.</p>
+      <div class="own"><b>בעלות ובדיקת נאותות.</b> זרים מחזיקים בבעלות מלאה (fee-simple) זהה לאזרחים — קונים, מוכרים, ממשכנים, משכירים ומעבירים כספים בחופשיות, ללא צורך בתושבות. יש למקד במגרשים מוסדרים פנימיים/עם נוף לאוקיינוס כדי להימנע מזכיון אזור החוף (200 מ'). מאחר שלא נחשפו נתונים פיננסיים בפועל — מחיר מבוקש, תפוסה, ADR, גודל קרקע וסטטוס הבעלות הם פריטי בדיקת-נאותות מחייבים לקונה.</div>
+    </div>
+    <div class="foot">
+      <div class="key"><b>מקרא מהימנות.</b> הנתונים במזכר זה נלקחו מחומרי הנכס עצמו, מנתוני תיירות ותעופה ציבוריים, מדגימת תעריפי מתחרים ומאמות-מידה של השוק. פרטי הנכס (יחידות, מתקנים, מיקום) נמסרו על-ידי המפעיל; נתוני שוק, ADR, תפוסה, תשואה ועליית ערך הם אומדנים ממקורות צד-שלישי ויש לאמתם באופן עצמאי. <b>לא פורסמו מחיר מבוקש, תפוסה או הכנסות.</b></div>
+      <div class="brand">Ocean Breeze Nosara<small>מזכר השקעה · 2026</small></div>
+    </div>
+    <p class="disc">הוכן להפצה פרטית למשקיעים פוטנציאליים. מסמך זה הוא תקציר מידע, אינו הצעה למכירה או שידול, ואינו מהווה ייעוץ השקעות, מס או משפטי. כל הנתונים צופי-פני-עתיד הם להמחשה וכפופים לבדיקת נאותות. מקורות: oceanbreezenosara.com, נתוני תיירות ICT / Tico Times, סטטיסטיקת נמל התעופה גואנקסטה, ורשימות תעריפי מתחרים (Mr &amp; Mrs Smith, KAYAK, Tripadvisor).</p>
+  </div>
+</section>
+</main>
 
 <script>
-// theme toggle passthrough already handled by tokens; add a tiny scroll-safe fade for hero only
-document.addEventListener('DOMContentLoaded',function(){
-  var h=document.querySelector('.hero-inner .wrap');
-  if(h&&!matchMedia('(prefers-reduced-motion:reduce)').matches){h.classList.add('fade');}
-});
+function setLang(l){
+  var en=document.getElementById('doc-en'), he=document.getElementById('doc-he');
+  var isHe = l==='he';
+  he.hidden=!isHe; en.hidden=isHe;
+  document.documentElement.lang=l;
+  document.documentElement.dir=isHe?'rtl':'ltr';
+  document.getElementById('btn-en').setAttribute('aria-pressed', String(!isHe));
+  document.getElementById('btn-he').setAttribute('aria-pressed', String(isHe));
+  try{localStorage.setItem('obn_lang', l);}catch(e){}
+}
+(function(){
+  var saved='en';
+  try{ saved=localStorage.getItem('obn_lang')|| (navigator.language&&navigator.language.indexOf('he')===0?'he':'en'); }catch(e){}
+  setLang(saved==='he'?'he':'en');
+  if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+    document.querySelectorAll('.hero-inner .wrap').forEach(function(h){h.classList.add('fade');});
+  }
+})();
 </script>
