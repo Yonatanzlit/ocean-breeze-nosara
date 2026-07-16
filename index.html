@@ -37,17 +37,22 @@ img{max-width:100%;display:block}
 .doc[lang="he"] .sub{font-style:normal}
 .doc[hidden]{display:none}
 
-/* language bar */
-.langbar{position:sticky;top:0;z-index:40;display:flex;justify-content:center;gap:0;
-  background:color-mix(in srgb,var(--shell) 88%,transparent);backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--line);padding:9px 0}
-.langbar button{font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-  border:1px solid var(--line);background:var(--panel);color:var(--stone);padding:7px 18px;cursor:pointer;
-  transition:all .15s ease}
-.langbar button:first-child{border-radius:4px 0 0 4px;border-right:0}
-.langbar button:last-child{border-radius:0 4px 4px 0}
-.langbar button[aria-pressed="true"]{background:var(--forest);color:#F5F1E6;border-color:var(--forest)}
-.langbar button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+/* top bar: property switch + language */
+.topbar{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--shell) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.tb-inner{max-width:1120px;margin:0 auto;padding:8px 28px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.proptabs{display:flex;gap:4px}
+.ptab{font-family:var(--serif);font-size:15px;letter-spacing:.01em;border:1px solid transparent;background:transparent;color:var(--stone);padding:7px 14px;border-radius:5px;cursor:pointer;transition:all .15s ease}
+.ptab .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--brass);margin-inline-end:8px;vertical-align:middle;opacity:.45}
+.ptab[aria-selected="true"]{color:var(--ink);background:var(--panel);border-color:var(--line);box-shadow:var(--shadow)}
+.ptab[aria-selected="true"] .dot{opacity:1;background:var(--forest)}
+.ptab:hover{color:var(--ink)}
+.ptab:focus-visible,.langtabs button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.langtabs{display:flex}
+.langtabs button{font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);background:var(--panel);color:var(--stone);padding:7px 14px;cursor:pointer;transition:all .15s ease}
+.langtabs button:first-child{border-radius:4px 0 0 4px;border-inline-end:0}
+.langtabs button:last-child{border-radius:0 4px 4px 0}
+.langtabs button[aria-pressed="true"]{background:var(--forest);color:#F5F1E6;border-color:var(--forest)}
+@media(max-width:600px){.tb-inner{justify-content:center;gap:8px}.ptab{font-size:13px;padding:6px 9px}.ptab .dot{margin-inline-end:5px}}
 
 .eyebrow{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--brass-deep);margin:0}
 .doc[lang="he"] .eyebrow,.doc[lang="he"] .kicker,.doc[lang="he"] .snap .k,.doc[lang="he"] .k,
@@ -180,7 +185,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
   :root{--shell:#fff;--panel:#fff}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   body{background:#fff;font-size:10.5px;line-height:1.42}
-  .langbar{display:none!important}
+  .topbar{display:none!important}
   .wrap{max-width:none;padding:0 12mm}
   .fade{opacity:1!important;transform:none!important;animation:none!important}
   .page{padding-bottom:8mm}
@@ -209,13 +214,21 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
 @keyframes rise{to{opacity:1;transform:none}}
 </style>
 
-<div class="langbar" role="group" aria-label="Language">
-  <button id="btn-en" aria-pressed="true" onclick="setLang('en')">English</button>
-  <button id="btn-he" aria-pressed="false" onclick="setLang('he')">עברית</button>
+<div class="topbar">
+  <div class="tb-inner">
+    <div class="proptabs" role="tablist" aria-label="Property">
+      <button class="ptab" data-prop="obn" role="tab" aria-selected="true" onclick="setProp('obn')"><span class="dot"></span>Ocean Breeze Nosara</button>
+      <button class="ptab" data-prop="laj" role="tab" aria-selected="false" onclick="setProp('laj')"><span class="dot"></span>La Joya de Nosara</button>
+    </div>
+    <div class="langtabs" role="group" aria-label="Language">
+      <button id="btn-en" aria-pressed="true" onclick="setLang('en')">English</button>
+      <button id="btn-he" aria-pressed="false" onclick="setLang('he')">עברית</button>
+    </div>
+  </div>
 </div>
 
-<!-- ================= ENGLISH ================= -->
-<main class="doc" id="doc-en" lang="en" dir="ltr">
+<!-- ================= OCEAN BREEZE — ENGLISH ================= -->
+<main class="doc" id="doc-obn-en" lang="en" dir="ltr">
 <section class="page">
   <div class="hero">
     <div class="toptag"><div class="wrap"><span>Private Investment Memorandum</span><span>Strictly Confidential · 2026</span></div></div>
@@ -358,8 +371,8 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
 </section>
 </main>
 
-<!-- ================= HEBREW (RTL) ================= -->
-<main class="doc" id="doc-he" lang="he" dir="rtl" hidden>
+<!-- ================= OCEAN BREEZE — HEBREW (RTL) ================= -->
+<main class="doc" id="doc-obn-he" lang="he" dir="rtl" hidden>
 <section class="page">
   <div class="hero">
     <div class="toptag"><div class="wrap"><span>מזכר השקעה פרטי</span><span>חסוי · 2026</span></div></div>
@@ -502,23 +515,322 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
 </section>
 </main>
 
+<!-- ================= LA JOYA — ENGLISH ================= -->
+<main class="doc" id="doc-laj-en" lang="en" dir="ltr" hidden>
+<section class="page">
+  <div class="hero">
+    <div class="toptag"><div class="wrap"><span>Private Investment Memorandum</span><span>Strictly Confidential · 2026</span></div></div>
+    <div class="hero-inner"><div class="wrap fade">
+      <div class="kicker">Playa Pelada · Nosara · Nicoya Blue Zone, Costa Rica</div>
+      <h1>La Joya<br>de Nosara</h1>
+      <div class="sub">A turn-key, 9.6-rated casita compound — steps from Playa Pelada’s sunset beach.</div>
+    </div></div>
+  </div>
+  <div class="wrap">
+    <div class="pagehead"><span>Executive Summary</span><span class="n">01 / 03</span></div>
+    <div class="sec" style="margin-top:26px">
+      <div class="snap">
+        <div class="cell"><p class="k">The Asset</p><div class="v">Turn-key compound<small>6 casitas · built 2022</small></div></div>
+        <div class="cell"><p class="k">Accommodation</p><div class="v">6 units<small>4× 1-BR + 2 studios · sleeps ~19</small></div></div>
+        <div class="cell"><p class="k">The Beach</p><div class="v">5-min walk<small>To Playa Pelada</small></div></div>
+        <div class="cell"><p class="k">Asking Price</p><div class="v num-ltr">$1.75–1.98M<small>Disclosed · income-producing</small></div></div>
+        <div class="cell"><p class="k">Access</p><div class="v">~2.5 hours<small>To Liberia Int'l (LIR)</small></div></div>
+      </div>
+      <p class="amen"><b>Turn-key &amp; nomad-ready:</b> per-unit granite kitchens · in-unit laundry · A/C · private 18 m² terraces · redundant WiFi with battery backup · shared pool &amp; loungers · outdoor rancho with BBQ &amp; adobe pizza oven · wildlife gardens (howlers, hummingbirds) · 2,400 m² lot with an unbuilt expansion portion · full operating stack included in the sale.</p>
+    </div>
+    <div class="sec locate">
+      <div class="mapcard">
+        <h3>Playa Pelada, Nosara</h3>
+        <div class="coord">Guanacaste, Costa Rica · Nicoya Peninsula</div>
+        <svg class="svgmap" viewBox="0 0 640 300" role="img" aria-label="Locator map">
+          <defs><linearGradient id="sea3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--ocean)" stop-opacity=".16"/><stop offset="1" stop-color="var(--ocean)" stop-opacity=".05"/></linearGradient></defs>
+          <rect width="640" height="300" fill="url(#sea3)"/>
+          <path d="M250,300 C255,235 300,215 330,180 C360,146 350,110 385,80 C420,52 470,58 520,40 C575,20 640,25 640,25 L640,300 Z" fill="var(--forest)" fill-opacity=".13" stroke="var(--forest)" stroke-opacity=".35" stroke-width="1.5"/>
+          <path d="M250,300 C255,235 300,215 330,180 C360,146 350,110 385,80 C420,52 470,58 520,40 C575,20 640,25 640,25" fill="none" stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="2 5" stroke-opacity=".7"/>
+          <text x="90" y="150" font-family="var(--serif)" font-style="italic" font-size="19" fill="var(--ocean)" opacity=".75">Pacific Ocean</text>
+          <g font-family="var(--sans)" font-size="12">
+            <circle cx="470" cy="92" r="4.5" fill="var(--stone)"/><text x="482" y="88" fill="var(--ink)">Nosara town</text><text x="482" y="103" fill="var(--stone)" font-size="10.5">shops · dining · yoga</text>
+            <circle cx="322" cy="196" r="4.5" fill="var(--ocean)"/><text x="334" y="192" fill="var(--ink)">Playa Pelada</text><text x="334" y="207" fill="var(--stone)" font-size="10.5">quiet sunset beach</text>
+            <circle cx="300" cy="238" r="4" fill="var(--forest-2)"/><text x="312" y="242" fill="var(--stone)" font-size="10.5">Playa Guiones · 1.5 km</text>
+            <circle cx="352" cy="164" r="9" fill="var(--brass)" fill-opacity=".22"/><circle cx="352" cy="164" r="4.5" fill="var(--brass-deep)"/>
+            <line x1="352" y1="164" x2="322" y2="196" stroke="var(--brass)" stroke-width="1.3" stroke-dasharray="3 3"/>
+            <text x="364" y="156" font-family="var(--serif)" font-size="14" fill="var(--brass-deep)">La Joya</text><text x="364" y="171" fill="var(--stone)" font-size="10.5">5-min walk to beach</text>
+          </g>
+        </svg>
+        <div class="maprow">
+          <div class="p"><span class="dot" style="background:var(--brass-deep)"></span><span><b>The compound</b>Near-beach, jungle-edge, flat lot</span></div>
+          <div class="p"><span class="dot" style="background:var(--ocean)"></span><span><b>Playa Pelada</b>5-minute walk · sunset cove</span></div>
+          <div class="p"><span class="dot" style="background:var(--forest-2)"></span><span><b>Playa Guiones</b>1.5 km · 320+ surf days</span></div>
+        </div>
+      </div>
+      <div class="qrcard"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQMAAADS6sNKAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP//8i138cAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAIISURBVHic7ZnNrcQgDIQtpYCUlNYpKQVE8tv4F5DeYW870vgQJfCRC2NjG9HvTMiTJ/9L/C1h1/stZ86IHKrjtDezgzwkfwRwNWVzdzxsIj7JI/JGyWXKOFMU43zi0yYu8vB8PAz9TD4y/Yg8Pm9B/ZHFyOPzEc99WFwKU4z/L/6Th+Bz58vf90cpgzwg3zYpw96e9PI28nB87filmpG9/X2ZJQ/Iv2YJ2Mgsu2OAVVafpLuUQR6Pf2r45Y3zpkgm3S6KU8kj8nfsuPe2LB/z5aWHKqTJw/IaUXxb5G8eAw7ykLzINGytzFEB3JdrHOTkQXk7kW1k1EPvdPXN38lD8V022Zztffer3Q6d8m3yULw1uHzvo5QKeXSMT3mQx+TNfGSUAEIUqlM0IA/IH+qu7JaH9hzKazl5VP5ZV0Z4b7XseiAPw4cKcu+3+yaTh2RQJ4/Ix0i2Mqem18iTez3fyQPxWTtFFvYqI93f07NqlJDH5L1Y8tzrtStjvDdKVEsU5CF5mWpjicj+/qPzscXfyQPxbbX3Lg+pUzqrafKAfGXU3grpfma2QrxRsvY/yePwWUX5jls+dm6uLjLpgTwab8N9SsfN07Qou2Hk0fmxX0V0U4Q8Pu8J9hDJRDxD+XTfRB6Nj3iuYXE2V2ammX6TR+TTr10P3cCs8rlunsgD8l8ZefLkf4f/A0NDxn2OE1rZAAAAAElFTkSuQmCC" alt="QR to Google Maps"><div class="place">Scan to open in Google Maps</div><div class="lab">lajoyadenosara.com</div></div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><span class="idx">i.</span><h2>Investment Highlights</h2></div>
+      <div class="hl">
+        <div class="item"><span class="num">01</span><p><b>Turn-key, already-built and already-earning — not a development bet.</b> A 2022-built, 6-unit / ~460 m² compound sold with its full operating stack (maintenance, cleaning, guest management, concierge, IT, marketing) — a running business, not a construction project.</p></div>
+        <div class="item"><span class="num">02</span><p><b>A disclosed, negotiable entry: ~$1.75M–$1.98M.</b> Rare price transparency for Nosara; the ~$230K spread between the two listing brokers signals live negotiating room.</p></div>
+        <div class="item"><span class="num">03</span><p><b>A 9.6/10 “Exceptional” guest score anchors pricing power.</b> Perfect 10s on Cleanliness, Comfort and Facilities across ~20 reviews — demand-side proof to push ADR from a ~$179 entry toward Nosara’s $400–$495 boutique band.</p></div>
+        <div class="item"><span class="num">04</span><p><b>Steps from Playa Pelada and 1.5 km from Guiones’ 320+ surf days.</b> Both the quiet-sunset-beach and world-class-surf demand pools in one walkable Blue Zone location.</p></div>
+        <div class="item"><span class="num">05</span><p><b>Built-in expansion optionality on a 2,400 m² lot.</b> An underutilised secondary portion is a path to add keys or a shared wellness/event asset — the single biggest untapped lever.</p></div>
+        <div class="item"><span class="num">06</span><p><b>Rides record Guanacaste demand.</b> Liberia hit 1.91M passengers in 2024 (+16% YoY) into a $5.54B record tourism market; ~75% North-American arrivals match its guest exactly.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="page">
+  <div class="wrap">
+    <div class="pagehead"><span>The Opportunity</span><span class="n">02 / 03</span></div>
+    <div class="sec" style="margin-top:22px">
+      <div class="sec-h"><span class="idx">ii.</span><h2>Why Nosara, Why Now</h2></div>
+      <p class="lead">The same branded, weather-proof, supply-capped market that lifts every Nosara asset — with La Joya sitting inside the Pelada / Guiones catchment.</p>
+      <div class="stats">
+        <div class="s"><div class="fig num-ltr">1.91<span class="u">M</span></div><div class="lab">Liberia (LIR) airport passengers in 2024, <b>+16% YoY</b> — a record</div></div>
+        <div class="s"><div class="fig num-ltr">~75<span class="u">%</span></div><div class="lab">of arrivals are North American; the US alone ~61% — high-income, dollar-based</div></div>
+        <div class="s"><div class="fig num-ltr">320<span class="u">+</span></div><div class="lab">surfable days a year at Playa Guiones, 1.5 km away — year-round demand</div></div>
+        <div class="s"><div class="fig">Blue<span class="u"> Zone</span></div><div class="lab">Nicoya — one of five global longevity zones; Nosara is its wellness capital</div></div>
+      </div>
+      <div class="marketgrid">
+        <div class="mpoint"><h4>Wellness moat</h4><p>Anchored by the Nosara Yoga Institute, Bodhi Tree and Blue Spirit. Costa Rica wellness tourism ≈ $1.2B, growing ~16%/yr — travellers who spend far more and stay longer.</p></div>
+        <div class="mpoint"><h4>Digital-nomad tailwind</h4><p>La Joya is built for it — redundant battery-backed WiFi, in-unit kitchens and laundry — converting Costa Rica’s tax-friendly nomads into long-stay renters and lifting the green-season trough.</p></div>
+        <div class="mpoint"><h4>Constrained supply</h4><p>Strict low-density zoning and a protected forest buffer keep inventory scarce and walkable. Playa Pelada is the quieter, more exclusive cove north of the surf beach.</p></div>
+        <div class="mpoint"><h4>Affluent audience</h4><p>Nosara draws Silicon Valley executives, wellness entrepreneurs and affluent families — a low-price-sensitivity pool buying second homes and paying premium rates.</p></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><span class="idx">iii.</span><h2>Revenue Opportunities</h2></div>
+      <p class="lead">Six self-catering casitas plus a shared pool, rancho and pizza oven flex across couples, nomads, surf and small-group buyouts — priced each week to its highest use.</p>
+      <div class="rev">
+        <div class="card"><span class="tag">Core engine</span><div class="t">Boutique nightly</div><div class="fig">$333–$495 / night</div><div class="d">Repricing the six casitas from a ~$179 entry toward the Nosara boutique band — the immediate, actionable lever.</div></div>
+        <div class="card"><span class="tag">Whole property</span><div class="t">Family buyouts</div><div class="fig">$10k–$50k+ / week</div><div class="d">~19 guests across 6 private units + shared pool, rancho &amp; pizza oven — La Joya’s strongest group play.</div></div>
+        <div class="card"><span class="tag">Wellness</span><div class="t">Small retreats</div><div class="fig">~$22k–$30k / week</div><div class="d">19 beds in a Blue Zone support hosted retreats — unlocks fully once a movement/shala space is added.</div></div>
+        <div class="card"><span class="tag">Long-stay</span><div class="t">Digital nomads</div><div class="fig">Monthly tenancies</div><div class="d">Battery-backed WiFi, in-unit kitchens &amp; laundry make nomad and long-term stays a high-occupancy floor between peaks.</div></div>
+        <div class="card"><span class="tag">Year-round</span><div class="t">Surf camps</div><div class="fig">$900–$4,790 / guest</div><div class="d">1.5 km to Guiones (320+ days) supports packaged surf-camp weeks using the compound as base.</div></div>
+        <div class="card"><span class="tag">Owned media</span><div class="t">Creator offsites</div><div class="fig">$50k–$150k+ / buyout</div><div class="d">A photogenic 2022 build, pool and private terraces suit creator buyouts and small team offsites — capped by ~19 beds.</div></div>
+        <div class="card"><span class="tag">Ancillary</span><div class="t">Curated experiences</div><div class="fig">Commissioned add-ons</div><div class="d">Snorkel, ATV, sunset horseback, SUP, guided birding (270+ species), surf lessons, coffee tours — already offered, ready to package.</div></div>
+        <div class="card"><span class="tag">Milestone</span><div class="t">Micro-weddings</div><div class="fig">$450–$750 / guest</div><div class="d">Garden, rancho and pool host intimate ceremonies and elopements — small-scale until an event venue is built.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="page">
+  <div class="wrap">
+    <div class="pagehead"><span>Investment Potential</span><span class="n">03 / 03</span></div>
+    <div class="sec" style="margin-top:22px">
+      <div class="sec-h"><span class="idx">iv.</span><h2>The Value-Creation Gap</h2></div>
+      <p class="lead">La Joya’s ~$179 entry rate sits far below the Nosara boutique band — the widest, most immediately actionable repricing gap on offer. Occupancy has the same headroom.</p>
+      <div class="gapwrap">
+        <div>
+          <p class="eyebrow" style="margin-bottom:14px">Rate — nightly, per casita</p>
+          <div class="bars">
+            <div class="bar"><div class="top"><b>Entry rate today</b><span class="val num-ltr">~$179</span></div><div class="track"><div class="fill" style="width:30%;background:var(--stone)"></div></div></div>
+            <div class="bar"><div class="top"><b>Boutique-luxury going band</b><span class="val num-ltr">$400–$500</span></div><div class="track"><div class="fill" style="width:74%;background:var(--ocean)"></div></div></div>
+            <div class="bar"><div class="top"><b>Branded-retreat ceiling</b><span class="val num-ltr">$495+</span></div><div class="track"><div class="fill" style="width:88%;background:var(--forest)"></div></div></div>
+          </div>
+          <p class="legend"><b>Comps:</b> Silvestre ~$469 · Gilded Iguana ~$471 · Bodhi Tree ~$451–$572 · Harmony ~$252–$430. A 9.6-rated, fully-managed asset is positioned to out-index the market floor.</p>
+        </div>
+        <div>
+          <p class="eyebrow" style="margin-bottom:14px">Occupancy — annual blended</p>
+          <div class="bars">
+            <div class="bar"><div class="top"><b>Market today</b><span class="val num-ltr">~40–56%</span></div><div class="track"><div class="fill" style="width:48%;background:var(--stone)"></div></div></div>
+            <div class="bar"><div class="top"><b>Stabilised target</b><span class="val num-ltr">~65–70%</span></div><div class="track"><div class="fill" style="width:68%;background:var(--forest)"></div></div></div>
+          </div>
+          <p class="legend">High season already runs 85–95%. Battery-backed WiFi and in-unit kitchens make La Joya a natural nomad / long-stay floor to fill the low-season trough (~28–30%).</p>
+          <div class="levers">
+            <div class="lever"><span class="up num-ltr">+15–30%</span><p><b>ADR reposition</b> from the ~$179 entry toward the boutique band — the 9.6 score and perfect facilities subs support it.</p></div>
+            <div class="lever"><span class="up num-ltr">+10–20%</span><p><b>Soft-brand affiliation</b> — currently unbranded and OTA-dependent.</p></div>
+            <div class="lever"><span class="up num-ltr">Build</span><p><b>Expansion lot</b> — add keys or a shared wellness/event asset on the 2,400 m² parcel to unlock the retreat &amp; group tiers La Joya can’t yet serve.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="thesis">
+      <p class="eyebrow">The Investment Thesis</p>
+      <h2>The cleanest, already-earning expression of the Nosara thesis — at a disclosed price.</h2>
+      <p>La Joya de Nosara is the most direct way to own the Nosara thesis: a brand-new (2022), fully-managed, income-producing asset priced at a disclosed ~$1.75M–$1.98M, riding a Guanacaste market at record scale (LIR 1.91M passengers, +16%; $5.54B national tourism), with a 9.6/10 guest score already validating demand. The value case is a straightforward reprice-and-professionalise story — lift a ~$179 entry ADR toward the $400–$495 boutique band, shift OTA guests to direct booking (2.5–3× lifetime value) and layer in a soft-brand — against ~8–10%/yr appreciation, with the operating stack and reputation already in place to execute from close.</p>
+      <p>What makes La Joya distinct is that it is a smaller (6 vs 10 units), flatter, near-beach residential compound optimised for couples, nomads and self-catering travellers — not an event machine. It owns the “quieter Pelada, steps-to-sunset-beach, turn-key passive income” position, where Ocean Breeze owns “hillside ocean-view, group-buyout, weddings-and-retreats.” Its differentiator and its upside are the same lever: a 2,400 m² lot with an unbuilt secondary portion which, paired with a modest wellness/event build, could migrate La Joya up into the higher-value retreat and group tiers it currently cannot serve.</p>
+      <div class="own"><b>Ownership &amp; diligence.</b> Foreigners hold fee-simple title identical to citizens. Confirm the current asking price (brokers quote $1.75M vs $1.98M) and exactly what the sale includes (business/LLC, furnishings, systems). Verify the 200-metre Maritime Zone setback given the steps-to-beach position, the 2,400 m² boundary and the expansion portion’s buildability. The asking price is disclosed, but operating economics are not — demand a trailing-12-month P&amp;L, occupancy calendar and booking-source mix before underwriting.</div>
+    </div>
+    <div class="foot">
+      <div class="key"><b>Confidence key.</b> Property specifics (units, build year, land, amenities, 9.6 rating, asking price) are stated by the operator or listing brokers; market, ADR, occupancy, yield and appreciation figures are Nosara benchmarks or estimates from third-party sources and should be independently verified. <b>No occupancy, ADR or revenue has been publicly disclosed; the two brokers quote different asking prices ($1.75M vs $1.98M).</b></div>
+      <div class="brand">La Joya de Nosara<small>Investment Memorandum · 2026</small></div>
+    </div>
+    <p class="disc">Prepared for private circulation to prospective investors. This document is an informational summary, not an offer to sell or a solicitation, and does not constitute investment, tax or legal advice. All forward-looking figures are illustrative and subject to due diligence. Sources include lajoyadenosara.com, Booking.com, Coldwell Banker and Century 21 listings, ICT / Tico Times tourism data, and Guanacaste Airport statistics.</p>
+  </div>
+</section>
+</main>
+
+<!-- ================= LA JOYA — HEBREW (RTL) ================= -->
+<main class="doc" id="doc-laj-he" lang="he" dir="rtl" hidden>
+<section class="page">
+  <div class="hero">
+    <div class="toptag"><div class="wrap"><span>מזכר השקעה פרטי</span><span>חסוי · 2026</span></div></div>
+    <div class="hero-inner"><div class="wrap fade">
+      <div class="kicker">פלאיה פלאדה · נוסארה · אזור התכלת ניקויה, קוסטה ריקה</div>
+      <h1>La Joya<br>de Nosara</h1>
+      <div class="sub">מתחם קזיטות פעיל ומוכן, בדירוג 9.6 — צעדים מחוף השקיעה פלאיה פלאדה.</div>
+    </div></div>
+  </div>
+  <div class="wrap">
+    <div class="pagehead"><span>תמצית מנהלים</span><span class="n num-ltr">01 / 03</span></div>
+    <div class="sec" style="margin-top:26px">
+      <div class="snap">
+        <div class="cell"><p class="k">הנכס</p><div class="v">מתחם פעיל ומוכן<small>6 קזיטות · נבנה 2022</small></div></div>
+        <div class="cell"><p class="k">אירוח</p><div class="v">6 יחידות<small>4× חדר-שינה + 2 סטודיו · עד ~19 אורחים</small></div></div>
+        <div class="cell"><p class="k">החוף</p><div class="v">5 דק' הליכה<small>לפלאיה פלאדה</small></div></div>
+        <div class="cell"><p class="k">מחיר מבוקש</p><div class="v num-ltr">$1.75–1.98M<small>מפורסם · מניב הכנסה</small></div></div>
+        <div class="cell"><p class="k">נגישות</p><div class="v">כ-2.5 שעות<small>לנמל התעופה ליבריה (LIR)</small></div></div>
+      </div>
+      <p class="amen"><b>מוכן לתפעול ולנוודים:</b> מטבח גרניט בכל יחידה · מכונת כביסה/ייבוש ביחידה · מיזוג · מרפסת פרטית 18 מ"ר · אינטרנט מגובה-סוללה · בריכה משותפת ומיטות שיזוף · רנצ'ו חיצוני עם BBQ ותנור פיצה מאדובה · גינות טבע (קופי האולר, יונקי דבש) · מגרש 2,400 מ"ר עם חלקת הרחבה לא-בנויה · כל מערך התפעול כלול במכירה.</p>
+    </div>
+    <div class="sec locate">
+      <div class="mapcard">
+        <h3>פלאיה פלאדה, נוסארה</h3>
+        <div class="coord">Guanacaste, Costa Rica · חצי-האי ניקויה</div>
+        <svg class="svgmap" viewBox="0 0 640 300" role="img" aria-label="מפת מיקום">
+          <defs><linearGradient id="sea4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--ocean)" stop-opacity=".16"/><stop offset="1" stop-color="var(--ocean)" stop-opacity=".05"/></linearGradient></defs>
+          <rect width="640" height="300" fill="url(#sea4)"/>
+          <path d="M250,300 C255,235 300,215 330,180 C360,146 350,110 385,80 C420,52 470,58 520,40 C575,20 640,25 640,25 L640,300 Z" fill="var(--forest)" fill-opacity=".13" stroke="var(--forest)" stroke-opacity=".35" stroke-width="1.5"/>
+          <path d="M250,300 C255,235 300,215 330,180 C360,146 350,110 385,80 C420,52 470,58 520,40 C575,20 640,25 640,25" fill="none" stroke="var(--brass)" stroke-width="1.4" stroke-dasharray="2 5" stroke-opacity=".7"/>
+          <text x="90" y="150" font-family="var(--serif-he)" font-size="18" fill="var(--ocean)" opacity=".78" direction="rtl">האוקיינוס השקט</text>
+          <g font-family="var(--sans-he)" font-size="12" direction="rtl">
+            <circle cx="470" cy="92" r="4.5" fill="var(--stone)"/><text x="458" y="88" fill="var(--ink)" text-anchor="end">העיירה נוסארה</text><text x="458" y="103" fill="var(--stone)" font-size="10.5" text-anchor="end">חנויות · מסעדות · יוגה</text>
+            <circle cx="322" cy="196" r="4.5" fill="var(--ocean)"/><text x="310" y="192" fill="var(--ink)" text-anchor="end">פלאיה פלאדה</text><text x="310" y="207" fill="var(--stone)" font-size="10.5" text-anchor="end">חוף שקיעה שקט</text>
+            <circle cx="300" cy="238" r="4" fill="var(--forest-2)"/><text x="288" y="242" fill="var(--stone)" font-size="10.5" text-anchor="end">פלאיה גיונס · 1.5 ק"מ</text>
+            <circle cx="352" cy="164" r="9" fill="var(--brass)" fill-opacity=".22"/><circle cx="352" cy="164" r="4.5" fill="var(--brass-deep)"/>
+            <line x1="352" y1="164" x2="322" y2="196" stroke="var(--brass)" stroke-width="1.3" stroke-dasharray="3 3"/>
+            <text x="340" y="156" font-family="var(--serif)" font-size="14" fill="var(--brass-deep)" text-anchor="end">La Joya</text><text x="340" y="171" fill="var(--stone)" font-size="10.5" text-anchor="end">5 דק' הליכה לחוף</text>
+          </g>
+        </svg>
+        <div class="maprow">
+          <div class="p"><span class="dot" style="background:var(--brass-deep)"></span><span><b>המתחם</b>קרוב-לחוף, שולי-ג'ונגל, מגרש שטוח</span></div>
+          <div class="p"><span class="dot" style="background:var(--ocean)"></span><span><b>פלאיה פלאדה</b>5 דקות הליכה · מפרץ שקיעה</span></div>
+          <div class="p"><span class="dot" style="background:var(--forest-2)"></span><span><b>פלאיה גיונס</b>1.5 ק"מ · 320+ ימי גלישה</span></div>
+        </div>
+      </div>
+      <div class="qrcard"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQMAAADS6sNKAAAABlBMVEUAAAD///+l2Z/dAAAAAnRSTlP//8i138cAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAIISURBVHic7ZnNrcQgDIQtpYCUlNYpKQVE8tv4F5DeYW870vgQJfCRC2NjG9HvTMiTJ/9L/C1h1/stZ86IHKrjtDezgzwkfwRwNWVzdzxsIj7JI/JGyWXKOFMU43zi0yYu8vB8PAz9TD4y/Yg8Pm9B/ZHFyOPzEc99WFwKU4z/L/6Th+Bz58vf90cpgzwg3zYpw96e9PI28nB87filmpG9/X2ZJQ/Iv2YJ2Mgsu2OAVVafpLuUQR6Pf2r45Y3zpkgm3S6KU8kj8nfsuPe2LB/z5aWHKqTJw/IaUXxb5G8eAw7ykLzINGytzFEB3JdrHOTkQXk7kW1k1EPvdPXN38lD8V022Zztffer3Q6d8m3yULw1uHzvo5QKeXSMT3mQx+TNfGSUAEIUqlM0IA/IH+qu7JaH9hzKazl5VP5ZV0Z4b7XseiAPw4cKcu+3+yaTh2RQJ4/Ix0i2Mqem18iTez3fyQPxWTtFFvYqI93f07NqlJDH5L1Y8tzrtStjvDdKVEsU5CF5mWpjicj+/qPzscXfyQPxbbX3Lg+pUzqrafKAfGXU3grpfma2QrxRsvY/yePwWUX5jls+dm6uLjLpgTwab8N9SsfN07Qou2Hk0fmxX0V0U4Q8Pu8J9hDJRDxD+XTfRB6Nj3iuYXE2V2ammX6TR+TTr10P3cCs8rlunsgD8l8ZefLkf4f/A0NDxn2OE1rZAAAAAElFTkSuQmCC" alt="קוד QR ל-Google Maps"><div class="place">סרקו לפתיחה ב-Google Maps</div><div class="lab">lajoyadenosara.com</div></div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><span class="idx num-ltr">i.</span><h2>עיקרי ההשקעה</h2></div>
+      <div class="hl">
+        <div class="item"><span class="num num-ltr">01</span><p><b>מוכן, בנוי וכבר מניב — לא הימור על ייזום.</b> מתחם 6 יחידות / ~460 מ"ר משנת 2022, נמכר עם כל מערך התפעול (אחזקה, ניקיון, ניהול אורחים, קונסיירז', IT, שיווק) — עסק פעיל, לא פרויקט בנייה.</p></div>
+        <div class="item"><span class="num num-ltr">02</span><p><b>כניסה מפורסמת וניתנת למו"מ: ~$1.75M–$1.98M.</b> שקיפות מחיר נדירה בנוסארה; פער של ~$230K בין שני המתווכים מסמן מרחב מו"מ פעיל.</p></div>
+        <div class="item"><span class="num num-ltr">03</span><p><b>דירוג אורחים 9.6/10 “יוצא מן הכלל” מעגן כוח תמחור.</b> ציוני 10 מושלמים בניקיון, נוחות ומתקנים על פני ~20 ביקורות — הוכחת ביקוש שתומכת בהעלאת ADR מבסיס כניסה של ~$179 לעבר טווח הבוטיק $400–$495.</p></div>
+        <div class="item"><span class="num num-ltr">04</span><p><b>צעדים מפלאיה פלאדה ו-1.5 ק"מ מ-320+ ימי הגלישה של גיונס.</b> גם חוף השקיעה השקט וגם גלישה ברמה עולמית במיקום הליך אחד בלב אזור התכלת.</p></div>
+        <div class="item"><span class="num num-ltr">05</span><p><b>אופציונליות הרחבה מובנית על מגרש 2,400 מ"ר.</b> חלקה משנית לא-מנוצלת פותחת דרך להוספת יחידות או נכס בריאות/אירועים משותף — המנוף הבלתי-מנוצל הגדול ביותר.</p></div>
+        <div class="item"><span class="num num-ltr">06</span><p><b>רוכב על ביקוש שיא בגואנקסטה.</b> ליבריה עם 1.91 מיליון נוסעים ב-2024 (+16% שנתי) לתוך שוק תיירות שיא של 5.54 מיליארד דולר; ~75% מבקרים צפון-אמריקאים — בדיוק האורח שלה.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="page">
+  <div class="wrap">
+    <div class="pagehead"><span>ההזדמנות</span><span class="n num-ltr">02 / 03</span></div>
+    <div class="sec" style="margin-top:22px">
+      <div class="sec-h"><span class="idx num-ltr">ii.</span><h2>למה נוסארה, למה עכשיו</h2></div>
+      <p class="lead">אותו שוק ממותג, חסין מזג-אוויר ומוגבל-היצע שמרים כל נכס בנוסארה — כשלה חואיה יושבת בתוך אגן פלאדה / גיונס.</p>
+      <div class="stats">
+        <div class="s"><div class="fig num-ltr">1.91<span class="u">M</span></div><div class="lab">נוסעים בנמל התעופה ליבריה (LIR) ב-2024, <b>+16% שנתי</b> — שיא</div></div>
+        <div class="s"><div class="fig num-ltr">~75<span class="u">%</span></div><div class="lab">מהמבקרים צפון-אמריקאים; ארה"ב לבדה ~61% — הכנסה גבוהה, מבוסס-דולר</div></div>
+        <div class="s"><div class="fig num-ltr">320<span class="u">+</span></div><div class="lab">ימי גלישה בשנה בפלאיה גיונס, 1.5 ק"מ משם — ביקוש כל-עונתי</div></div>
+        <div class="s"><div class="fig">Blue<span class="u"> Zone</span></div><div class="lab">ניקויה — אחד מחמישה אזורי אריכות-ימים בעולם; נוסארה היא בירת הבריאות שלו</div></div>
+      </div>
+      <div class="marketgrid">
+        <div class="mpoint"><h4>חפיר בריאות</h4><p>מעוגן במכון היוגה של נוסארה, Bodhi Tree ו-Blue Spirit. תיירות הבריאות בקוסטה ריקה ≈ 1.2 מיליארד דולר, צומחת ~16% בשנה — מטיילים שמוציאים הרבה יותר ונשארים לאורך זמן.</p></div>
+        <div class="mpoint"><h4>רוח גבית של נוודים דיגיטליים</h4><p>לה חואיה בנויה לכך — אינטרנט מגובה-סוללה, מטבחים ומכונות כביסה ביחידות — והופכת את הנוודים ידידותיי-המס של קוסטה ריקה לשוכרים לטווח ארוך, ומרימה את שפל העונה הירוקה.</p></div>
+        <div class="mpoint"><h4>היצע מוגבל</h4><p>תכנון בצפיפות נמוכה ורצועת יער מוגנת שומרים על מלאי נדיר והליך. פלאיה פלאדה היא המפרץ השקט והבלעדי יותר מצפון לחוף הגלישה.</p></div>
+        <div class="mpoint"><h4>קהל אמיד</h4><p>נוסארה מושכת מנהלי היי-טק, יזמי בריאות ומשפחות אמידות — קהל בעל רגישות-מחיר נמוכה שקונה בתי נופש ומשלם תעריפי פרימיום.</p></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><span class="idx num-ltr">iii.</span><h2>הזדמנויות הכנסה</h2></div>
+      <p class="lead">שש קזיטות עצמאיות יחד עם בריכה, רנצ'ו ותנור פיצה משותפים גמישות בין זוגות, נוודים, גלישה והשכרות קבוצתיות קטנות — כל שבוע מתומחר לשימוש המשתלם ביותר.</p>
+      <div class="rev">
+        <div class="card"><span class="tag">מנוע ליבה</span><div class="t">לינה בוטיק</div><div class="fig num-ltr">$333–$495 / לילה</div><div class="d">תמחור מחדש של שש הקזיטות מבסיס כניסה של ~$179 לעבר טווח הבוטיק בנוסארה — המנוף המיידי והישים.</div></div>
+        <div class="card"><span class="tag">נכס מלא</span><div class="t">השכרות משפחה</div><div class="fig num-ltr">$10k–$50k+ / שבוע</div><div class="d">~19 אורחים ב-6 יחידות פרטיות + בריכה, רנצ'ו ותנור פיצה משותפים — המהלך הקבוצתי החזק ביותר של לה חואיה.</div></div>
+        <div class="card"><span class="tag">בריאות</span><div class="t">ריטריטים קטנים</div><div class="fig num-ltr">~$22k–$30k / שבוע</div><div class="d">19 מיטות באזור תכלת תומכות בריטריטים מאורחים — נפתח במלואו עם הוספת מרחב תנועה/שאלה.</div></div>
+        <div class="card"><span class="tag">שהייה ארוכה</span><div class="t">נוודים דיגיטליים</div><div class="fig">שכירות חודשית</div><div class="d">אינטרנט מגובה-סוללה, מטבחים ומכונות כביסה ביחידות הופכים נוודים ושהייה ארוכה לרצפת תפוסה בין השיאים.</div></div>
+        <div class="card"><span class="tag">כל השנה</span><div class="t">מחנות גלישה</div><div class="fig num-ltr">$900–$4,790 / אורח</div><div class="d">1.5 ק"מ לגיונס (320+ ימים) תומך בשבועות מחנה-גלישה עם המתחם כבסיס.</div></div>
+        <div class="card"><span class="tag">מדיה בבעלות</span><div class="t">כנסי יוצרים</div><div class="fig num-ltr">$50k–$150k+ / השכרה</div><div class="d">מבנה 2022 צילומי, בריכה ומרפסות פרטיות מתאימים להשכרות יוצרים וכנסי צוות קטנים — מוגבל ל-~19 מיטות.</div></div>
+        <div class="card"><span class="tag">מוסף</span><div class="t">חוויות מובחרות</div><div class="fig">תוספות בעמלה</div><div class="d">שנורקל, ATV, רכיבת סוסים בשקיעה, סאפ, צפרות מודרכת (270+ מינים), שיעורי גלישה, סיורי קפה — כבר מוצעים, מוכנים לחבילה.</div></div>
+        <div class="card"><span class="tag">אירוע מיוחד</span><div class="t">מיקרו-חתונות</div><div class="fig num-ltr">$450–$750 / אורח</div><div class="d">גינה, רנצ'ו ובריכה מארחים טקסים אינטימיים ואלופמנטים — בקנה-מידה קטן עד שייבנה מתחם אירועים.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="page">
+  <div class="wrap">
+    <div class="pagehead"><span>פוטנציאל ההשקעה</span><span class="n num-ltr">03 / 03</span></div>
+    <div class="sec" style="margin-top:22px">
+      <div class="sec-h"><span class="idx num-ltr">iv.</span><h2>פער יצירת הערך</h2></div>
+      <p class="lead">תעריף הכניסה של לה חואיה (~$179) נמצא הרבה מתחת לטווח הבוטיק בנוסארה — פער התמחור הרחב והישים ביותר. לתפוסה יש אותו מרחב.</p>
+      <div class="gapwrap">
+        <div>
+          <p class="eyebrow" style="margin-bottom:14px">תעריף — ללילה, לקזיטה</p>
+          <div class="bars">
+            <div class="bar"><div class="top"><b>תעריף כניסה כיום</b><span class="val num-ltr">~$179</span></div><div class="track"><div class="fill" style="width:30%;background:var(--stone)"></div></div></div>
+            <div class="bar"><div class="top"><b>טווח יוקרת-בוטיק בשוק</b><span class="val num-ltr">$400–$500</span></div><div class="track"><div class="fill" style="width:74%;background:var(--ocean)"></div></div></div>
+            <div class="bar"><div class="top"><b>תקרת נופש ממותג</b><span class="val num-ltr">$495+</span></div><div class="track"><div class="fill" style="width:88%;background:var(--forest)"></div></div></div>
+          </div>
+          <p class="legend"><b>השוואות:</b> Silvestre ~$469 · Gilded Iguana ~$471 · Bodhi Tree ~$451–$572 · Harmony ~$252–$430. נכס מנוהל בדירוג 9.6 ממוצב לעקוף את רצפת השוק.</p>
+        </div>
+        <div>
+          <p class="eyebrow" style="margin-bottom:14px">תפוסה — שנתית משוקללת</p>
+          <div class="bars">
+            <div class="bar"><div class="top"><b>השוק כיום</b><span class="val num-ltr">~40–56%</span></div><div class="track"><div class="fill" style="width:48%;background:var(--stone)"></div></div></div>
+            <div class="bar"><div class="top"><b>יעד מיוצב</b><span class="val num-ltr">~65–70%</span></div><div class="track"><div class="fill" style="width:68%;background:var(--forest)"></div></div></div>
+          </div>
+          <p class="legend">העונה הגבוהה כבר בתפוסת 85–95%. אינטרנט מגובה-סוללה ומטבחים ביחידות הופכים את לה חואיה לרצפת נוודים/שהייה-ארוכה טבעית שממלאת את שפל העונה הנמוכה (~28–30%).</p>
+          <div class="levers">
+            <div class="lever"><span class="up num-ltr">+15–30%</span><p><b>מיצוב ADR מחדש</b> מבסיס הכניסה (~$179) לעבר טווח הבוטיק — הדירוג 9.6 וציוני המתקנים המושלמים תומכים בכך.</p></div>
+            <div class="lever"><span class="up num-ltr">+10–20%</span><p><b>שיוך סופט-ברנד</b> — כיום לא-ממותג ותלוי-OTA.</p></div>
+            <div class="lever"><span class="up">בנייה</span><p><b>מגרש ההרחבה</b> — הוספת יחידות או נכס בריאות/אירועים משותף על 2,400 מ"ר לפתיחת שכבות הריטריט והקבוצות שלה חואיה עדיין לא יכולה לשרת.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="thesis">
+      <p class="eyebrow">תזת ההשקעה</p>
+      <h2>הביטוי הנקי וכבר-המניב ביותר של תזת נוסארה — במחיר מפורסם.</h2>
+      <p>La Joya de Nosara היא הדרך הישירה ביותר להחזיק בתזת נוסארה: נכס חדש (2022), מנוהל במלואו ומניב הכנסה, במחיר מפורסם של ~$1.75M–$1.98M, רוכב על שוק גואנקסטה בהיקף שיא (ליבריה 1.91 מיליון נוסעים, +16%; 5.54 מיליארד דולר תיירות לאומית), עם דירוג אורחים 9.6/10 שכבר מאמת ביקוש. מקרה הערך הוא סיפור ישיר של תמחור-מחדש ומקצוע — העלאת ADR מ-~$179 לעבר טווח הבוטיק $400–$495, מעבר אורחי OTA להזמנה ישירה (ערך-חיים פי 2.5–3), ושכבת סופט-ברנד — מול עליית ערך ~8–10% בשנה, כשמערך התפעול והמוניטין כבר במקום לביצוע מהסגירה.</p>
+      <p>מה שמייחד את לה חואיה הוא שהיא מתחם מגורים קטן יותר (6 מול 10 יחידות), שטוח וקרוב-לחוף, ממוטב לזוגות, נוודים ומטיילים עצמאיים — לא מכונת אירועים. היא מחזיקה בעמדת “פלאדה השקטה, צעדים לחוף השקיעה, הכנסה פסיבית מוכנה”, בעוד Ocean Breeze מחזיקה ב“נוף אוקיינוס במדרון, השכרות קבוצתיות, חתונות וריטריטים”. הבידול והפוטנציאל שלה הם אותו מנוף: מגרש 2,400 מ"ר עם חלקה משנית לא-בנויה, שיחד עם בנייה צנועה של בריאות/אירועים יכול להעלות את לה חואיה לשכבות הריטריט והקבוצות בעלות הערך הגבוה שהיא אינה יכולה לשרת כיום.</p>
+      <div class="own"><b>בעלות ובדיקת נאותות.</b> זרים מחזיקים בבעלות מלאה (fee-simple) זהה לאזרחים. יש לאמת את המחיר המבוקש הנוכחי (מתווכים נוקבים $1.75M מול $1.98M) ומה בדיוק כלול במכירה (עסק/חברה, ריהוט, מערכות). יש לוודא את קו הנסיגה של אזור החוף (200 מ') לאור מיקום “צעדים לחוף”, את גבול 2,400 מ"ר ואת יכולת הבנייה בחלקת ההרחבה. המחיר מפורסם, אך הנתונים התפעוליים אינם — יש לדרוש דו"ח רווח-והפסד ל-12 חודשים אחרונים, יומן תפוסה ותמהיל מקורות הזמנה לפני חיתום.</div>
+    </div>
+    <div class="foot">
+      <div class="key"><b>מקרא מהימנות.</b> פרטי הנכס (יחידות, שנת בנייה, קרקע, מתקנים, דירוג 9.6, מחיר מבוקש) נמסרו על-ידי המפעיל או מתווכי הרישום; נתוני שוק, ADR, תפוסה, תשואה ועליית ערך הם אמות-מידה של נוסארה או אומדנים ממקורות צד-שלישי ויש לאמתם באופן עצמאי. <b>לא פורסמו תפוסה, ADR או הכנסות; שני המתווכים נוקבים מחירים שונים ($1.75M מול $1.98M).</b></div>
+      <div class="brand">La Joya de Nosara<small>מזכר השקעה · 2026</small></div>
+    </div>
+    <p class="disc">הוכן להפצה פרטית למשקיעים פוטנציאליים. מסמך זה הוא תקציר מידע, אינו הצעה למכירה או שידול, ואינו מהווה ייעוץ השקעות, מס או משפטי. כל הנתונים צופי-פני-עתיד הם להמחשה וכפופים לבדיקת נאותות. מקורות: lajoyadenosara.com, Booking.com, רישומי Coldwell Banker ו-Century 21, נתוני תיירות ICT / Tico Times, וסטטיסטיקת נמל התעופה גואנקסטה.</p>
+  </div>
+</section>
+</main>
+
 <script>
-function setLang(l){
-  var en=document.getElementById('doc-en'), he=document.getElementById('doc-he');
-  var isHe = l==='he';
-  he.hidden=!isHe; en.hidden=isHe;
-  document.documentElement.lang=l;
-  document.documentElement.dir=isHe?'rtl':'ltr';
-  document.getElementById('btn-en').setAttribute('aria-pressed', String(!isHe));
-  document.getElementById('btn-he').setAttribute('aria-pressed', String(isHe));
-  try{localStorage.setItem('obn_lang', l);}catch(e){}
+var STATE={prop:'obn',lang:'en'};
+function render(){
+  document.querySelectorAll('.doc').forEach(function(d){d.hidden=true;});
+  var el=document.getElementById('doc-'+STATE.prop+'-'+STATE.lang);
+  if(el){el.hidden=false;}
+  var he=STATE.lang==='he';
+  document.documentElement.lang=STATE.lang;
+  document.documentElement.dir=he?'rtl':'ltr';
+  document.querySelectorAll('.ptab').forEach(function(b){b.setAttribute('aria-selected',String(b.dataset.prop===STATE.prop));});
+  document.getElementById('btn-en').setAttribute('aria-pressed',String(!he));
+  document.getElementById('btn-he').setAttribute('aria-pressed',String(he));
+  try{localStorage.setItem('obn_prop',STATE.prop);localStorage.setItem('obn_lang',STATE.lang);}catch(e){}
+  window.scrollTo(0,0);
 }
+function setProp(p){STATE.prop=p;render();}
+function setLang(l){STATE.lang=l;render();}
 (function(){
-  var saved='en';
-  try{ saved=localStorage.getItem('obn_lang')|| (navigator.language&&navigator.language.indexOf('he')===0?'he':'en'); }catch(e){}
-  setLang(saved==='he'?'he':'en');
+  try{
+    var p=localStorage.getItem('obn_prop'); if(p==='obn'||p==='laj')STATE.prop=p;
+    var l=localStorage.getItem('obn_lang'); if(l==='en'||l==='he')STATE.lang=l;
+    else if(navigator.language&&navigator.language.indexOf('he')===0)STATE.lang='he';
+  }catch(e){}
   if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
     document.querySelectorAll('.hero-inner .wrap').forEach(function(h){h.classList.add('fade');});
   }
+  render();
 })();
 </script>
