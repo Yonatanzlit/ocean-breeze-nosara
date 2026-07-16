@@ -221,14 +221,14 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
       <button class="ptab" data-prop="laj" role="tab" aria-selected="false" onclick="setProp('laj')"><span class="dot"></span>La Joya de Nosara</button>
     </div>
     <div class="langtabs" role="group" aria-label="Language">
-      <button id="btn-en" aria-pressed="true" onclick="setLang('en')">English</button>
-      <button id="btn-he" aria-pressed="false" onclick="setLang('he')">עברית</button>
+      <button id="btn-en" aria-pressed="false" onclick="setLang('en')">English</button>
+      <button id="btn-he" aria-pressed="true" onclick="setLang('he')">עברית</button>
     </div>
   </div>
 </div>
 
 <!-- ================= OCEAN BREEZE — ENGLISH ================= -->
-<main class="doc" id="doc-obn-en" lang="en" dir="ltr">
+<main class="doc" id="doc-obn-en" lang="en" dir="ltr" hidden>
 <section class="page">
   <div class="hero">
     <div class="toptag"><div class="wrap"><span>Private Investment Memorandum</span><span>Strictly Confidential · 2026</span></div></div>
@@ -372,7 +372,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
 </main>
 
 <!-- ================= OCEAN BREEZE — HEBREW (RTL) ================= -->
-<main class="doc" id="doc-obn-he" lang="he" dir="rtl" hidden>
+<main class="doc" id="doc-obn-he" lang="he" dir="rtl">
 <section class="page">
   <div class="hero">
     <div class="toptag"><div class="wrap"><span>מזכר השקעה פרטי</span><span>חסוי · 2026</span></div></div>
@@ -806,7 +806,7 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;text-wrap:balance;margin:0;col
 </main>
 
 <script>
-var STATE={prop:'obn',lang:'en'};
+var STATE={prop:'obn',lang:'he'};
 function render(){
   document.querySelectorAll('.doc').forEach(function(d){d.hidden=true;});
   var el=document.getElementById('doc-'+STATE.prop+'-'+STATE.lang);
@@ -826,7 +826,6 @@ function setLang(l){STATE.lang=l;render();}
   try{
     var p=localStorage.getItem('obn_prop'); if(p==='obn'||p==='laj')STATE.prop=p;
     var l=localStorage.getItem('obn_lang'); if(l==='en'||l==='he')STATE.lang=l;
-    else if(navigator.language&&navigator.language.indexOf('he')===0)STATE.lang='he';
   }catch(e){}
   if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
     document.querySelectorAll('.hero-inner .wrap').forEach(function(h){h.classList.add('fade');});
